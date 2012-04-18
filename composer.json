@@ -1,0 +1,24 @@
+{
+  "name": "phraseanet/showcase",
+  "description": "A simple way to exhibit your Phraseanet media from publishing workflows",
+  "require": {
+    "php": ">=5.3.6",
+    "twig/twig": "1.6.*",
+    "twig/extensions": "master",
+    "silex/silex": "1.0.*",
+    "guzzle/guzzle": "2.3.*",
+    "alchemy/phraseanet-clients": "master",
+    "symfony/dependency-injection": "2.1.*"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/alchemy-fr/Phraseanet-Clients"
+    }
+  ],
+  "autoload": {
+    "psr-0": {
+      "Alchemy": "src"
+    }
+  }
+}
