@@ -3,6 +3,6 @@
 composer.lock
 composer.phar
 .DS_Store
-/config/ini.json
-/www/.htaccess
+config/ini.json
+www/.htaccess
 
