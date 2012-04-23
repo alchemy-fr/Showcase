@@ -1,0 +1,7 @@
+{
+    "instance_uri": "http://my.domain.tld",
+    "client_id": "123456789",
+    "client_secret": "987654321",
+    "callback_uri": "http://my.domain.tld/callback ",
+    "dev_token": "123456789987654321"
+}

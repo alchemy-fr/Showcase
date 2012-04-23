@@ -1,0 +1,27 @@
+{
+    "meta": {
+        "api_version": "1.0",
+        "request": "GET /api/v1/feeds/1457/content/",
+        "response_time": "2011-11-04T14:48:27+01:00",
+        "http_code": 200,
+        "error_message": null,
+        "error_details": null,
+        "charset": "UTF-8"
+    },
+    "response": {
+        "feed": {
+            "id": 1457,
+            "title": "My Feed Test",
+            "subtitle": "My subtitle",
+            "total_entries": 0,
+            "icon": "/skins/icons/rss32.gif",
+            "public": false,
+            "is_mine": true,
+            "created_on": "2011-11-04T14:38:57+01:00",
+            "updated_on": "2011-11-04T14:38:57+01:00"
+        },
+        "offset_start": 0,
+        "per_page": 5,
+        "entries": {}
+    }
+}

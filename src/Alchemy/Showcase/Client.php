@@ -33,7 +33,7 @@ class Client extends PhraseanetSDK\Client
         }
         catch (ParameterNotFoundException $e)
         {
-            throw new Exception\RuntimeException(sprintf(
+            throw new \InvalidArgumentException(sprintf(
                             'Bad configuration missing key %s', $e->getKey()
                     ),
                     0,
@@ -58,11 +58,6 @@ class Client extends PhraseanetSDK\Client
     public function getAccessToken()
     {
         return $this->devToken;
-    }
-
-    public function setAccessToken($token)
-    {
-        $this->devToken = $token;
     }
 
     public function getInstanceUri()
