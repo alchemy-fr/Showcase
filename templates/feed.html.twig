@@ -1,0 +1,27 @@
+{% set entries = feed.getEntries %}
+
+<h1>liste des entries pour le feed {{ feed.getTitle }}</h1>
+{% if entries | length > 0 %}
+  {% for entry in entries %}
+    <h2>authorName</h2> {{ entry.getAuthorName }}
+    <h2>title</h2> {{ entry.getTitle }}
+    <h2>subtitle</h2> {{ entry.getSubtitle }}
+    <h2>createdOn</h2> {{ entry.getCreatedOn | date('d-m-Y') }}
+    {% set items = entry.getItems %}
+    {% if items | length > 0 %}
+      <h3>{{items | length}} item dans l'entry</h3>
+      {% for item in items %}
+        <hr />
+        {% set record = item.getRecord %}
+          <h4>title</h4>{{record.getTitle}}
+          <h4>type</h4>{{record.getPhraseaType}}
+        {% set thumbnail = record.getThumbnail %}
+          <h4>player_type</h4>{{thumbnail.getPlayerType}}
+          <h4>height</h4>{{thumbnail.getHeight}}
+          <h4>width</h4>{{thumbnail.getWidth}}
+        {% set permalink = thumbnail.getPermalink %}
+          <h4>URL</h4>{{permalink.getUrl}}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+{% endif %}

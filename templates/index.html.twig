@@ -1,0 +1,16 @@
+
+<h1>Liste des feeds</h1>
+{% for feed in feeds %}
+
+<h2>id</h2>{{ feed.getId }}
+<h2>title</h2>{{ feed.getTitle }}
+<h2>subtitle</h2>{{ feed.getSubtitle }}
+<h2>totalEntries</h2>{{ feed.getTotalEntries }}
+<h2>createdOn</h2>{{ feed.getCreatedOn | date('d-m-Y') }}
+<h2>UpdatedOn</h2>{{ feed.getUpdatedOn | date('d-m-Y') }}
+
+{% if not loop.last %}
+<hr />
+{% endif %}
+
+{% endfor %}
