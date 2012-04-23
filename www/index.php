@@ -16,7 +16,7 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
 ));
 
 $app->register(new Alchemy\Showcase\Provider\EntityManager(), array(
-    'config.file_path' => __DIR__ . '/../config/initest.json'
+    'config.file_path' => __DIR__ . '/../config/ini.json'
 ));
 
 $app->get('/', function(Silex\Application $app)
