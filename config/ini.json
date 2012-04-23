@@ -1,0 +1,8 @@
+{
+    "instance_uri": "https://my.instance.tld",
+    "client_id": "123456789",
+    "client_secret": "9876543210",
+    "callback_uri": "https://my.instance.tld/my/callback",
+    "api_version": "1",
+    "dev_token": "123456789"
+}
