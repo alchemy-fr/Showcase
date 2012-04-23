@@ -4,5 +4,5 @@ composer.lock
 composer.phar
 .DS_Store
 /config/ini.json
-.htaccess
+/www/.htaccess
 
