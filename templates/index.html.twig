@@ -1,16 +1,49 @@
+{% extends "base.html.twig" %}
 
-<h1>Liste des feeds</h1>
-{% for feed in feeds %}
+{% block headerTitle %}
+    <p>
+        {% for feed in feeds %}
+            <a href="/feed/{{ feed.getId() }}/0/5">{{ feed.getTitle() }}</a>
+            {% if not loop.last %}
+                <span class="slash">/</span>
+            {% endif %}
+        {% endfor %}
+    </p>
+{% endblock %}
 
-<h2>id</h2>{{ feed.getId }}
-<h2>title</h2>{{ feed.getTitle }}
-<h2>subtitle</h2>{{ feed.getSubtitle }}
-<h2>totalEntries</h2>{{ feed.getTotalEntries }}
-<h2>createdOn</h2>{{ feed.getCreatedOn | date('d-m-Y') }}
-<h2>UpdatedOn</h2>{{ feed.getUpdatedOn | date('d-m-Y') }}
+{% block content %}
+    <div class="viewArticles span10 offset1">
+        
+        
+        <h1>Liste des feeds</h1>
+        <hr />
+        {% for feed in feeds %}
 
-{% if not loop.last %}
-<hr />
-{% endif %}
+            <h2>id</h2>{{ feed.getId }}
+            <h2>title</h2>{{ feed.getTitle }}
+            <h2>subtitle</h2>{{ feed.getSubtitle }}
+            <h2>totalEntries</h2>{{ feed.getTotalEntries }}
+            <h2>createdOn</h2>{{ feed.getCreatedOn | date('d-m-Y') }}
+            <h2>UpdatedOn</h2>{{ feed.getUpdatedOn | date('d-m-Y') }}
 
-{% endfor %}
+            {% if not loop.last %}
+            <hr />
+            {% endif %}
+
+        {% endfor %}
+            
+            
+    </div>
+{% endblock %}
+
+{% block footer %}
+    <p>
+        {% for feed in feeds %}
+            <a href="#">{{ feed.getTitle() }}</a>
+            {% if not loop.last %}
+                <span class="slash">/</span>
+            {% endif %}
+        {% endfor %}
+    </p>
+{% endblock %}
+

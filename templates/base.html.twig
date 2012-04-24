@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% block head %}
+            <title>Phraseanet Showcase {% block title %}{% endblock %}</title>
+            <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+            <!-- Mobile viewport optimized -->
+        	<meta name="viewport" content="width=device-width, initial-scale=1">
+        	<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+        	<!--[if lt IE 9]>
+        	<script src="//html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        	<![endif]-->
+
+        	<!-- Styles -->
+           	<link rel="stylesheet" type="text/css" href="/include/css/bootstrap.min.css" />
+        	<link rel="stylesheet" type="text/css" href="/include/css/bootstrap-responsive.min.css" />
+            <link rel="stylesheet" type="text/css" href="/include/css/default.css" />
+
+            <!-- JavaScripts -->
+            <script type="text/javascript" src="http://code.jquery.com/jquery-1.7.1.js"></script>
+            <script type="text/javascript" src="/include/js/bootstrap.min.js"></script>
+        {% endblock %}
+    </head>
+
+    <body>
+        <div id="page" class="container">
+
+            <div class="header">
+                {% block header %}
+                    <a id="logoAlchemy" href="#"></a>
+                    <div id="logoSocial">
+                        <a id="logoFb" href="#"></a>
+                        <a id="logoTw" href="#"></a>
+                        <a id="logoB" href="#"></a>
+                    </div>
+                    {% block headerTitle %}{% endblock %}
+                {% endblock %}
+            </div><!-- /header -->
+            <div class="clear"></div>
+            <hr />
+
+            <div id="content" class="row">
+                {% block content %}{% endblock %}
+            </div><!-- /content -->
+            <div class="clear"></div>
+            <hr />
+
+            <div class="footer">
+                {% block footer %}{% endblock %}
+            </div><!-- /footer -->
+
+        </div><!-- /page -->
+        <div id="bodyFooter">
+            {% block bodyFooter %}
+                <p id="bodyFooterCP">&copy; 2012 Alchemy</p>
+            {% endblock %}
+        </div><!-- /bodyFooter -->
+    </body>
+</html>
