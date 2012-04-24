@@ -25,6 +25,7 @@
     <filter>
     <blacklist>
       <directory>./vendor</directory>
+      <directory>./vendor/.composer</directory>
     </blacklist>
   </filter>
 </phpunit>
