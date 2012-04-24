@@ -48,34 +48,23 @@ $app->get('/entry/{feedId}/{offset}/{perPage}/{entryId}', function(Silex\Applica
                     $feed = $app['em']->getRepository('feed')->findById($feedId, $offset, $perPage);
 
                     $entries = $feed->getEntries();
-
-                    $entriesCollection = new ArrayCollection();
-
+                    
                     foreach ($entries as $entry)
                     {
                         if ($entry->getId() == $entryId)
                         {
-                            $entriesCollection->add($entry);
+                            $feedCollection = $app['em']->getRepository('feed')->findAll();
+                            
+                            $templateDatas = array(
+                                'entry' => $entry
+                                , 'feeds' => $feedCollection
+                            );
 
-                            break;
+                            return $app['twig']->render('entry.html.twig', $templateDatas);
                         }
                     }
-
-                    if (0 === $entriesCollection->count())
-                    {
-                        throw new NotFoundHttpException();
-                    }
-
-                    $feed->setEntries($entriesCollection);
-
-                    $feedCollection = $app['em']->getRepository('feed')->findAll();
-
-                    $templateDatas = array(
-                        'feed' => $feed
-                        , 'feeds' => $feedCollection
-                    );
-
-                    return $app['twig']->render('entry.html.twig', $templateDatas);
+                    
+                    throw new NotFoundHttpException();
                 })
         ->assert('feedId', '\d+')
         ->assert('offset', '\d+')
