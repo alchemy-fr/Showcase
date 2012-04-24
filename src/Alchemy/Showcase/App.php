@@ -57,6 +57,7 @@ $app->get('/entry/{feedId}/{offset}/{perPage}/{entryId}', function(Silex\Applica
                             
                             $templateDatas = array(
                                 'entry' => $entry
+                                ,'feed' => $feed
                                 , 'feeds' => $feedCollection
                             );
 
