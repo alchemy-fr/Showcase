@@ -1,0 +1,17 @@
+{# Display the list of available feeds for navigation #}
+{% macro navFeedList(feeds, feed) %}
+    <p>
+        {% set feedInId = feed.getId() %}
+        {% for feed in feeds %}
+            {% set feedId = feed.getId() %}
+            {% if feedId == feedInId %}
+                <a href="/feed/{{ feed.getId() }}/0/5" class="active">{{ feed.getTitle() }}</a>
+            {% else %}
+                <a href="/feed/{{ feed.getId() }}/0/5">{{ feed.getTitle() }}</a>
+            {% endif %}
+            {% if not loop.last %}
+                <span class="slash">/</span>
+            {% endif %}
+        {% endfor %}
+    </p>
+{% endmacro %}

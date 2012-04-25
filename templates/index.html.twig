@@ -39,7 +39,7 @@
 {% block footer %}
     <p>
         {% for feed in feeds %}
-            <a href="#">{{ feed.getTitle() }}</a>
+            <a href="/feed/{{ feed.getId() }}/0/5">{{ feed.getTitle() }}</a>
             {% if not loop.last %}
                 <span class="slash">/</span>
             {% endif %}

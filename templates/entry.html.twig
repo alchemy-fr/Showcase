@@ -1,28 +1,24 @@
 {% extends "base.html.twig" %}
+{% import "macros.html.twig" as macros %}
 
 {% block head %}
     {{ parent() }}
     <link href="http://vjs.zencdn.net/c/video-js.css" rel="stylesheet">
     <script src="http://vjs.zencdn.net/c/video.js"></script>
+    <script>
+        $(document).ready(function(){
+            $('.carousel').carousel('pause');
+            $('.carousel').bind('slid mouseleave', function() {
+                $('.carousel').carousel('pause');
+            });
+        });
+    </script>
 {% endblock %}
 
 {% block title %}- {{ entry.getTitle() }}{% endblock %}
 
 {% block headerTitle %}
-    <p>
-        {% set feedInId = feed.getId() %}
-        {% for feed in feeds %}
-            {% set feedId = feed.getId() %}
-            {% if feedId == feedInId %}
-                <a href="/feed/{{ feed.getId() }}/0/5" class="active">{{ feed.getTitle() }}</a>
-            {% else %}
-                <a href="/feed/{{ feed.getId() }}/0/5">{{ feed.getTitle() }}</a>
-            {% endif %}
-            {% if not loop.last %}
-                <span class="slash">/</span>
-            {% endif %}
-        {% endfor %}
-    </p>
+    {{ macros.navFeedList(feeds, feed) }}
 {% endblock %}
 
 {% block content %}
@@ -47,44 +43,16 @@
                 {% endif %}
             </p>
             <a class="logoMinus" href="/feed/{{ feed.getId() }}/0/5"></a>
-        </div>
-    </div>
-    {% if items | length > 0 %}
-            {#{% set record = item.getRecord() %}
-            {% set thumbnail = record.getThumbnail() %}
-            {% set permalink = thumbnail.getPermalink() %}
-            <img src="{{ permalink.getUrl() }}" alt="{{ entry.getTitle() }}" />#}
-            {#{% for entry in entries %}
-                <h2>authorName</h2> {{ entry.getAuthorName }}
-                <h2>title</h2> {{ entry.getTitle }}
-                <h2>subtitle</h2> {{ entry.getSubtitle }}
-                <h2>createdOn</h2> {{ entry.getCreatedOn | date('d-m-Y') }}
-                {% set items = entry.getItems %}
+        </div><!-- /textArticle -->
+    </div><!-- /contentArticle -->
+    
+    <div class="imgArticle span8 offset2">
+        <div id="carouselArticle" class="carousel">
+            <div class="carousel-inner">
+                {# if there is at least one item in the entry #}
                 {% if items | length > 0 %}
-                <h3>{{items | length}} item dans l'entry</h3>
-                {% for item in items %}
-                    <hr />
-                    {% set record = item.getRecord %}
-                    <h4>title</h4>{{record.getTitle}}
-                    <h4>type</h4>{{record.getPhraseaType}}
-                    {% set thumbnail = record.getThumbnail %}
-                    <h4>player_type</h4>{{thumbnail.getPlayerType}}
-                    <h4>height</h4>{{thumbnail.getHeight}}
-                    <h4>width</h4>{{thumbnail.getWidth}}
-                    {% set permalink = thumbnail.getPermalink %}
-                    <h4>URL</h4>{{permalink.getUrl}}
-                {% endfor %}
-                {% endif %}
-            {% endfor %}#}
-                
-        <div class="imgArticle span8 offset2">
-            <div id="carouselArticle" class="carousel">
-                <!-- Carousel items -->
-                <div class="carousel-inner">
                     {% for item in items %}
                         {% set record = item.getRecord() %}
-                        {% set thumbnail = record.getThumbnail() %}
-                        {% set permalink = thumbnail.getPermalink() %}
                         {% if loop.first %}
                             <div class="item active">
                         {% else %}
@@ -93,7 +61,23 @@
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td valign="center" align="center">
-                                        <img src="{{ permalink.getUrl() }}" />
+                                        {# if item is an image #}
+                                        {% if record.getPhraseaType() == 'image' %}
+                                            {% for subdef in record.getSubdefs() %}
+                                                {% set subName = subdef.getName() %}
+                                                {% if subName == 'preview' %}
+                                                    {% set previewUrl = subdef.getPermalink().getUrl() %}
+                                                    <img src="{{ previewUrl }}" />
+                                                {% endif %}
+                                            {% endfor %}
+                                        {# if item is a video #}
+                                        {% else %}
+                                            <video id="my_video_1" class="video-js vjs-default-skin" controls
+                                                preload="auto" width="640" height="264" poster="http://video-js.zencoder.com/oceans-clip.jpg"
+                                                data-setup="{}">
+                                                <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'>
+                                            </video>
+                                        {% endif %}
                                     </td>
                                 </tr>
                             </table>
@@ -103,16 +87,15 @@
                             </div>
                         </div>
                     {% endfor %}
-
+                    {# test for video
                     <div class="item">
                         <table border="0" cellpadding="0" cellspacing="0">
                             <tr>
                                 <td valign="center" align="center">
                                     <video id="my_video_1" class="video-js vjs-default-skin" controls
-                                        preload="auto" width="640" height="264" poster="my_video_poster.png"
+                                        preload="auto" width="640" height="264" poster="http://video-js.zencoder.com/oceans-clip.jpg"
                                         data-setup="{}">
-                                        <source src="my_video.mp4" type='video/mp4'>
-                                        <source src="my_video.webm" type='video/webm'>
+                                        <source src="http://video-js.zencoder.com/oceans-clip.mp4" type='video/mp4'>
                                     </video>
                                 </td>
                             </tr>
@@ -121,34 +104,25 @@
                             <h4>test video</h4>
                             <p>MimeType : video/mp4</p>
                         </div>
-                    </div>                    
-
-                </div>
-                <!-- Carousel nav -->
-                <a class="carousel-control left" href="#carouselArticle" data-slide="prev">&lsaquo;</a>
-                <a class="carousel-control right" href="#carouselArticle" data-slide="next">&rsaquo;</a>
-            </div>
-        </div>
-    {% else %}
-
-    {% endif %}
-
-
+                    </div> #}
+                    
+                {# if there is no media in the entry #}
+                {% else %}
+                    <div class="item active">
+                        <table border="0" cellpadding="0" cellspacing="0">
+                            <tr>
+                                <td id="noItem" valign="center" align="center">Aucun m&eacute;dia disponible</td>
+                            </tr>
+                        </table>
+                    </div>
+                {% endif %}
+            </div><!-- /carousel-inner -->
+            <a id="ccLeft" class="carousel-control left" href="#carouselArticle" data-slide="prev">&lsaquo;</a>
+            <a id="ccRight" class="carousel-control right" href="#carouselArticle" data-slide="next">&rsaquo;</a>
+        </div><!-- /carouselArticle -->
+    </div><!-- /imgArticle -->
 {% endblock %}
 
 {% block footer %}
-    <p>
-        {% set feedInId = feed.getId() %}
-        {% for feed in feeds %}
-            {% set feedId = feed.getId() %}
-            {% if feedId == feedInId %}
-                <a href="/feed/{{ feed.getId() }}/0/5" class="active">{{ feed.getTitle() }}</a>
-            {% else %}
-                <a href="/feed/{{ feed.getId() }}/0/5">{{ feed.getTitle() }}</a>
-            {% endif %}
-            {% if not loop.last %}
-                <span class="slash">/</span>
-            {% endif %}
-        {% endfor %}
-    </p>
+    {{ macros.navFeedList(feeds, feed) }}
 {% endblock %}
