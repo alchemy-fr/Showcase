@@ -38,8 +38,10 @@
                 <span class="infosArticle">Description : </span>{{ entry.getSubtitle() }}<br />
                 <span class="infosArticle">M&eacute;dias : </span>                
                 {% set items = entry.getItems() %}
-                {% if items | length > 0 %}
-                    {{items | length}} m&eacute;dias pr&eacute;sents dans cette publication.
+                {% if items | length > 1 %}
+                    {{ items | length }} m&eacute;dias pr&eacute;sents dans cette publication.
+                {% elseif items | length == '1' %}
+                    1 m&eacute;dia pr&eacute;sent dans cette publication.
                 {% else %}
                     Aucun m&eacute;dia pr&eacute;sent dans cette publication.
                 {% endif %}
@@ -83,7 +85,11 @@
                         {% set record = item.getRecord() %}
                         {% set thumbnail = record.getThumbnail() %}
                         {% set permalink = thumbnail.getPermalink() %}
-                        <div class="item">
+                        {% if loop.first %}
+                            <div class="item active">
+                        {% else %}
+                            <div class="item">     
+                        {% endif %}
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
                                     <td valign="center" align="center">
