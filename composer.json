@@ -9,6 +9,9 @@
     "symfony/dependency-injection": ">=2.1",
     "phraseanet/php-sdk":"master"
   },
+  "require-dev": {
+    "symfony/browser-kit": ">=2.1"
+  },
   "autoload": {
     "psr-0": {
       "Alchemy": "src"
