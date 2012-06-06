@@ -28,11 +28,11 @@
                             <a href="/entry/{{ feed.getId() }}/0/5/{{ entry.getId() }}">
                             {% set items = entry.getItems() %}
                             {% if items | length > 0 %}
-                                {% set firstItem = items[0] %}
+                                {% set firstItem = items['0'] %}
                                 {% set record = firstItem.getRecord() %}
                                 {% for subdef in record.getSubdefs() %}
                                     {% set subName = subdef.getName() %}
-                                    {% if subName == 'preview' %}
+                                    {% if subName == 'preview' and subdef.getPlayerType() == 'IMAGE' %}
                                         {% set previewUrl = subdef.getPermalink().getUrl() %}
                                         <img src="{{ previewUrl }}" alt="{{ entry.getTitle() }}" />
                                     {% endif %}
