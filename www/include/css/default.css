@@ -245,11 +245,15 @@ a {
 }
 .previewArticle p {
     margin-bottom: 20px;
+    font-style: italic;
     font-size: 14px;
     line-height: 20px;
 }
+.previewArticle p.desc {
+    font-style: normal;
+}
 .previewArticle .infosArticle {
-    font-style: italic;
+    font-weight: bold;
 }
 .previewArticle a.logoPlus {
     display: block;
@@ -275,6 +279,14 @@ a {
     background-color: #0044CC;
     text-align: center;
     font-style: italic;
+    color: #FFF;
+}
+.previewImage .thumbnail a {
+    text-decoration: none;
+    color: #FFF;
+}
+.previewImage .thumbnail a:hover {
+    text-decoration: none;
     color: #FFF;
 }
 .previewImage .thumbnail:hover {
@@ -388,24 +400,13 @@ a {
 #carouselArticle .item table {
     width: 620px;
     height: 465px;
+    font-style: italic;
+    color: #FFF;
 }
 #carouselArticle .item img {
     display: inline-block;
     max-width: 616px;
     max-height: 461px;
-}
-#noItem {
-    text-align: center;
-    font-style: italic;
-    color: #FFF;
-}
-.carousel-caption {
-    background: rgba(0, 0, 0, 0.5);
-    text-align: center;
-    color: #FFF;
-}
-.carousel-control {
-    top: 50%;
 }
 @media (max-width: 767px) {
     #carouselArticle .item table {
@@ -413,7 +414,7 @@ a {
         height: 250px;
     }
     #carouselArticle .item img {
-        max-width: none;
+        max-width: 309px;
         max-height: 246px;
     }
 }
@@ -436,5 +437,18 @@ a {
         max-width: 766px;
         max-height: 574px;
     }
+}
+.noItem {
+    text-align: center;
+    font-style: italic;
+    color: #FFF;
+}
+.carousel-caption {
+    background: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: #FFF;
+}
+.carousel-control {
+    top: 50%;
 }
 /******************************************************************************/

@@ -16,9 +16,10 @@
                     <div class="previewArticle span6">
                         <h1><a href="/entry/{{ feed.getId() }}/0/5/{{ entry.getId() }}">{{ entry.getTitle() }}</a></h1>
                         <p>
-                            <span class="infosArticle">Publié le {{ entry.getCreatedOn() | date('d/m/Y') }} par {{ entry.getAuthorName() }}</span>.
-                            <br />
-                            <br />
+                            Publié le <span class="infosArticle">{{ entry.getCreatedOn() | date('d/m/Y') }}</span>
+                            par <span class="infosArticle">{{ entry.getAuthorName() }}</span>.
+                        </p>
+                        <p class="desc">
                             {{ entry.getSubtitle() }}
                         </p>
                         <a class="logoPlus" href="/entry/{{ feed.getId() }}/0/5/{{ entry.getId() }}"></a>
@@ -32,9 +33,11 @@
                                 {% set record = firstItem.getRecord() %}
                                 {% for subdef in record.getSubdefs() %}
                                     {% set subName = subdef.getName() %}
-                                    {% if subName == 'preview' and subdef.getPlayerType() == 'IMAGE' %}
+                                    {% if subName == 'preview' and subdef.getPermalink() is not none and subdef.getPlayerType() == 'IMAGE' %}
                                         {% set previewUrl = subdef.getPermalink().getUrl() %}
                                         <img src="{{ previewUrl }}" alt="{{ entry.getTitle() }}" />
+                                    {% elseif subName == 'preview' %}
+                                        Aucun affichage disponible
                                     {% endif %}
                                 {% endfor %}
                             {% else %}
