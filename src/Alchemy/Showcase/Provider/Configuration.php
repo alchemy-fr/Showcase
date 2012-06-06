@@ -19,5 +19,10 @@ class Configuration implements ServiceProviderInterface
                 return new ParameterBag(json_decode(file_get_contents($configFilePath), true));
             });
     }
+    
+    public function boot(Application $app)
+    {
+        
+    }
 }
 
