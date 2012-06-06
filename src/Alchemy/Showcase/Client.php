@@ -18,18 +18,16 @@ class Client extends PhraseanetSDK\Client
     protected $apiVersion;
     protected $devToken;
 
-    public function __construct($configFile, HttpClient $clientHttp)
+    public function __construct(ParameterBag $configuration, HttpClient $clientHttp)
     {
-        $content = file_get_contents($configFile);
-        $config = new ParameterBag(json_decode($content, true));
         try
         {
-            $this->instanceUri = rtrim($config->get('instance_uri'), '/');
-            $this->clientId = $config->get('client_id');
-            $this->clientSecret = $config->get('client_secret');
-            $this->callbackUri = $config->get('callback_uri');
-            $this->apiVersion = $config->get('api_version');
-            $this->devToken = $config->get('dev_token');
+            $this->instanceUri = rtrim($configuration->get('instance_uri'), '/');
+            $this->clientId = $configuration->get('client_id');
+            $this->clientSecret = $configuration->get('client_secret');
+            $this->callbackUri = $configuration->get('callback_uri');
+            $this->apiVersion = $configuration->get('api_version');
+            $this->devToken = $configuration->get('dev_token');
         }
         catch (ParameterNotFoundException $e)
         {

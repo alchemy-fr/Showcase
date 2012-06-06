@@ -26,26 +26,38 @@
         <div id="textArticle">
             <h1>{{ entry.getTitle() }}</h1>
             <p>
-                <span class="infosArticle">Date de publication : </span>{{ entry.getCreatedOn() | date('d/m/Y') }}.<br />
-                <span class="infosArticle">Derni&egrave;re &eacute;dition : </span>{{ entry.getUpdatedOn() | date('d/m/Y') }}.<br />
-                <span class="infosArticle">Auteur : </span>{{ entry.getAuthorName() }}<br />
-            </p>
-            <p>
-                <span class="infosArticle">Description : </span>{{ entry.getSubtitle() }}<br />
-                <span class="infosArticle">M&eacute;dias : </span>                
+                Publié le <span class="infosArticle">{{ entry.getCreatedOn() | date('d/m/Y') }}</span>
+                par <span class="infosArticle">{{ entry.getAuthorName() }}</span>
+                (derni&egrave;re &eacute;dition le <span class="infosArticle">{{ entry.getUpdatedOn() | date('d/m/Y') }}</span>).
+                <br />
                 {% set items = entry.getItems() %}
                 {% if items | length > 1 %}
-                    {{ items | length }} m&eacute;dias pr&eacute;sents dans cette publication.
+                    Contient <span class="infosArticle">{{ items | length }} m&eacute;dias</span>.
                 {% elseif items | length == '1' %}
-                    1 m&eacute;dia pr&eacute;sent dans cette publication.
+                    Contient <span class="infosArticle">1 m&eacute;dia</span>.
                 {% else %}
-                    Aucun m&eacute;dia pr&eacute;sent dans cette publication.
+                    Ne contient aucun m&eacute;dia.
                 {% endif %}
             </p>
+            {% if entry.getSubtitle() | length > 0 %}
+            <p class="desc">
+                <br />
+                {{ entry.getSubtitle() }}
+                <br />
+            </p>
+            {% else %}
+            <p>
+                <br />
+                Aucune description.
+                <br />
+            </p>
+            {% endif %}
+            <br />
             <a class="logoMinus" href="/feed/{{ feed.getId() }}/0/5"></a>
-        </div><!-- /textArticle -->
+            <br />
+       </div><!-- /textArticle -->
     </div><!-- /contentArticle -->
-    
+
     <div class="imgArticle span8 offset2">
         <div id="carouselArticle" class="carousel">
             <div class="carousel-inner">
@@ -56,7 +68,7 @@
                         {% if loop.first %}
                             <div class="item active">
                         {% else %}
-                            <div class="item">     
+                            <div class="item">
                         {% endif %}
                             <table border="0" cellpadding="0" cellspacing="0">
                                 <tr>
@@ -105,7 +117,7 @@
                             <p>MimeType : video/mp4</p>
                         </div>
                     </div> #}
-                    
+
                 {# if there is no media in the entry #}
                 {% else %}
                     <div class="item active">

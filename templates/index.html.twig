@@ -12,9 +12,39 @@
 {% endblock %}
 
 {% block content %}
-    <div class="viewArticles span10 offset1">
-        
-        
+    {% if feeds | length > 0 %}
+        <div id="feedsListHome" class="span12">
+            <h1>Bienvenue</h1>
+            <div class="row">
+                {% for feed in feeds %}
+                <div class="previewFeed span3">
+                    <a href="/feed/{{ feed.getId() }}/0/5">
+                        <div class="blueBarTop"></div>
+                        <div class="prevFeedContent">
+                            <div class="prevFeedThumb">
+                                <img src="{{ configuration.get('instance_uri') }}{{ feed.getIcon() }}" />
+                            </div>
+                            <div class="prevFeedText">
+                                <h4>{{ feed.getTitle() }}</h4>
+                                <p>{{ feed.getSubtitle() }}</p>
+                            </div>
+                        </div>
+                        <div class="blueBarBot"></div>
+                    </a>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    {% else %}
+        <div class="feedsListHome span10 offset1">
+            <div class="row">
+                <h2>Il n'y a aucun flux disponible</h2>
+            </div>
+        </div>
+    {% endif %}
+
+
+        <!--
         <h1>Liste des feeds</h1>
         <hr />
         {% for feed in feeds %}
@@ -31,9 +61,8 @@
             {% endif %}
 
         {% endfor %}
-            
-            
-    </div>
+        -->
+
 {% endblock %}
 
 {% block footer %}
@@ -46,4 +75,3 @@
         {% endfor %}
     </p>
 {% endblock %}
-

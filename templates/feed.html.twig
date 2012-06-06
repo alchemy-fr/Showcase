@@ -9,31 +9,38 @@
 
 {% block content %}
     {% set entries = feed.getEntries() %}
-    {% if entries | length > 0 %}   
+    {% if entries | length > 0 %}
         {% for entry in entries %}
             <div class="viewArticles span10 offset1">
                 <div class="row">
                     <div class="previewArticle span6">
                         <h1><a href="/entry/{{ feed.getId() }}/0/5/{{ entry.getId() }}">{{ entry.getTitle() }}</a></h1>
                         <p>
-                            <span class="infosArticle">Description : </span>{{ entry.getSubtitle() }}<br />
-                            <span class="infosArticle">Date de publication : </span>{{ entry.getCreatedOn() | date('d/m/Y') }}.<br />
-                            <span class="infosArticle">Auteur : </span>{{ entry.getAuthorName() }}
+                            <span class="infosArticle">Publié le {{ entry.getCreatedOn() | date('d/m/Y') }} par {{ entry.getAuthorName() }}</span>.
+                            <br />
+                            <br />
+                            {{ entry.getSubtitle() }}
                         </p>
                         <a class="logoPlus" href="/entry/{{ feed.getId() }}/0/5/{{ entry.getId() }}"></a>
                     </div><!-- /previewArticle -->
                     <div class="previewImage span4">
                         <div class="thumbnail">
+                            <a href="/entry/{{ feed.getId() }}/0/5/{{ entry.getId() }}">
                             {% set items = entry.getItems() %}
                             {% if items | length > 0 %}
                                 {% set firstItem = items[0] %}
                                 {% set record = firstItem.getRecord() %}
-                                {% set thumbnail = record.getThumbnail() %}
-                                {% set permalink = thumbnail.getPermalink() %}
-                                <img src="{{ permalink.getUrl() }}" alt="{{ entry.getTitle() }}" />
+                                {% for subdef in record.getSubdefs() %}
+                                    {% set subName = subdef.getName() %}
+                                    {% if subName == 'preview' %}
+                                        {% set previewUrl = subdef.getPermalink().getUrl() %}
+                                        <img src="{{ previewUrl }}" alt="{{ entry.getTitle() }}" />
+                                    {% endif %}
+                                {% endfor %}
                             {% else %}
                                 Aucun m&eacute;dia disponible
                             {% endif %}
+                            </a>
                         </div>
                     </div><!-- /previewImage -->
                 </div>
@@ -47,7 +54,7 @@
     {% else %}
         <div class="viewArticles span10 offset1">
             <div class="row">
-                <h2>Aucune entr&eacute;e dans ce flux.</h2>
+                <h2>Il n'y a aucune entr&eacute;e dans ce flux</h2>
             </div>
         </div><!-- /viewArticles -->
     {% endif %}

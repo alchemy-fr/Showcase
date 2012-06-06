@@ -18,12 +18,7 @@ class EntityManager implements ServiceProviderInterface
 
         $app['apiClient'] = $app->share(function () use ($app)
                 {
-                    $default = __DIR__ . '/../../../../config/ini.json';
-                    
-                    $configFilePath = isset($app['config.file_path']) ?
-                            $app['config.file_path'] : $default;
-                    
-                    return new ApiClient($configFilePath, $app['httpClient']);
+                    return new ApiClient($app['configuration'], $app['httpClient']);
                 });
 
         $app['em'] = $app->share(function () use ($app)
