@@ -38,31 +38,10 @@
     {% else %}
         <div class="feedsListHome span10 offset1">
             <div class="row">
-                <h2>Il n'y a aucun flux disponible</h2>
+                <h2>{% trans %}There is no feed available{% endtrans %}</h2>
             </div>
         </div>
     {% endif %}
-
-
-        <!--
-        <h1>Liste des feeds</h1>
-        <hr />
-        {% for feed in feeds %}
-
-            <h2>id</h2>{{ feed.getId }}
-            <h2>title</h2>{{ feed.getTitle }}
-            <h2>subtitle</h2>{{ feed.getSubtitle }}
-            <h2>totalEntries</h2>{{ feed.getTotalEntries }}
-            <h2>createdOn</h2>{{ feed.getCreatedOn | date('d-m-Y') }}
-            <h2>UpdatedOn</h2>{{ feed.getUpdatedOn | date('d-m-Y') }}
-
-            {% if not loop.last %}
-            <hr />
-            {% endif %}
-
-        {% endfor %}
-        -->
-
 {% endblock %}
 
 {% block footer %}

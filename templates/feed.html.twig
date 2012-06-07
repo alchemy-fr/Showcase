@@ -16,8 +16,8 @@
                     <div class="previewArticle span6">
                         <h1><a href="/entry/{{ feed.getId() }}/0/5/{{ entry.getId() }}">{{ entry.getTitle() }}</a></h1>
                         <p>
-                            Publié le <span class="infosArticle">{{ entry.getCreatedOn() | date('d/m/Y') }}</span>
-                            par <span class="infosArticle">{{ entry.getAuthorName() }}</span>.
+                            {% trans 'Published' %} <span class="infosArticle">{{ entry.getCreatedOn() | date('d/m/Y') }}</span>
+                            {% trans 'by' %} <span class="infosArticle">{{ entry.getAuthorName() }}</span>.
                         </p>
                         <p class="desc">
                             {{ entry.getSubtitle() }}
@@ -31,17 +31,20 @@
                             {% if items | length > 0 %}
                                 {% set firstItem = items['0'] %}
                                 {% set record = firstItem.getRecord() %}
-                                {% for subdef in record.getSubdefs() %}
-                                    {% set subName = subdef.getName() %}
-                                    {% if subName == 'preview' and subdef.getPermalink() is not none and subdef.getPlayerType() == 'IMAGE' %}
-                                        {% set previewUrl = subdef.getPermalink().getUrl() %}
-                                        <img src="{{ previewUrl }}" alt="{{ entry.getTitle() }}" />
-                                    {% elseif subName == 'preview' %}
-                                        Aucun affichage disponible
-                                    {% endif %}
-                                {% endfor %}
+                                {% if record.getPhraseaType() != 'image' and record.getPhraseaType() != 'video' %}
+                                    {% trans %}No preview available for this document{% endtrans %}
+                                {% else %}
+                                    {% for subdef in record.getSubdefs() if subdef.getName() == 'preview' %}
+                                        {% if subdef.getPermalink() is not none and subdef.getPlayerType() == 'IMAGE' %}
+                                            {% set previewUrl = subdef.getPermalink().getUrl() %}
+                                            <img src="{{ previewUrl }}" alt="{{ entry.getTitle() }}" />
+                                        {% else %}
+                                            {% trans %}No preview available for this document{% endtrans %}
+                                        {% endif %}
+                                    {% endfor %}
+                                {% endif %}
                             {% else %}
-                                Aucun m&eacute;dia disponible
+                                {% trans %}No media available{% endtrans %}
                             {% endif %}
                             </a>
                         </div>
@@ -57,7 +60,7 @@
     {% else %}
         <div class="viewArticles span10 offset1">
             <div class="row">
-                <h2>Il n'y a aucune entr&eacute;e dans ce flux</h2>
+                <h2>{% trans %}There is no entry in this feed{% endtrans %}</h2>
             </div>
         </div><!-- /viewArticles -->
     {% endif %}
