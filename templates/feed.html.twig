@@ -16,8 +16,8 @@
                     <div class="previewArticle span6">
                         <h1><a href="/entry/{{ feed.getId() }}/0/5/{{ entry.getId() }}">{{ entry.getTitle() }}</a></h1>
                         <p>
-                            {% trans 'Published' %} <span class="infosArticle">{{ entry.getCreatedOn() | date('d/m/Y') }}</span>
-                            {% trans 'by' %} <span class="infosArticle">{{ entry.getAuthorName() }}</span>.
+                            {#{% trans 'Published' %}#} <span class="infosArticle">{{ entry.getCreatedOn() | date('d/m/Y') }}</span>
+                            {#{% trans 'by' %}#} <span class="infosArticle">{{ entry.getAuthorName() }}</span>.
                         </p>
                         <p class="desc">
                             {{ entry.getSubtitle() }}
@@ -25,29 +25,29 @@
                         <a class="logoPlus" href="/entry/{{ feed.getId() }}/0/5/{{ entry.getId() }}"></a>
                     </div><!-- /previewArticle -->
                     <div class="previewImage span4">
-                        <div class="thumbnail">
-                            <a href="/entry/{{ feed.getId() }}/0/5/{{ entry.getId() }}">
-                            {% set items = entry.getItems() %}
-                            {% if items | length > 0 %}
-                                {% set firstItem = items['0'] %}
-                                {% set record = firstItem.getRecord() %}
-                                {% if record.getPhraseaType() != 'image' and record.getPhraseaType() != 'video' %}
-                                    {% trans %}No preview available for this document{% endtrans %}
+                        <a href="/entry/{{ feed.getId() }}/0/5/{{ entry.getId() }}">
+                            <div class="thumbnail">
+                                {% set items = entry.getItems() %}
+                                {% if items | length > 0 %}
+                                    {% set firstItem = items['0'] %}
+                                    {% set record = firstItem.getRecord() %}
+                                    {% if record.getPhraseaType() != 'image' and record.getPhraseaType() != 'video' %}
+                                        {#{% trans %}#}No preview available for this document{#{% endtrans %}#}
+                                    {% else %}
+                                        {% for subdef in record.getSubdefs() if subdef.getName() == 'preview' %}
+                                            {% if subdef.getPermalink() is not none and subdef.getPlayerType() == 'IMAGE' %}
+                                                {% set previewUrl = subdef.getPermalink().getUrl() %}
+                                                <img src="{{ previewUrl }}" alt="{{ entry.getTitle() }}" />
+                                            {% else %}
+                                                {#{% trans %}#}No preview available for this document{#{% endtrans %}#}
+                                            {% endif %}
+                                        {% endfor %}
+                                    {% endif %}
                                 {% else %}
-                                    {% for subdef in record.getSubdefs() if subdef.getName() == 'preview' %}
-                                        {% if subdef.getPermalink() is not none and subdef.getPlayerType() == 'IMAGE' %}
-                                            {% set previewUrl = subdef.getPermalink().getUrl() %}
-                                            <img src="{{ previewUrl }}" alt="{{ entry.getTitle() }}" />
-                                        {% else %}
-                                            {% trans %}No preview available for this document{% endtrans %}
-                                        {% endif %}
-                                    {% endfor %}
+                                    {#{% trans %}#}No media available{#{% endtrans %}#}
                                 {% endif %}
-                            {% else %}
-                                {% trans %}No media available{% endtrans %}
-                            {% endif %}
-                            </a>
-                        </div>
+                            </div>
+                        </a>
                     </div><!-- /previewImage -->
                 </div>
             </div><!-- /viewArticles -->
@@ -60,7 +60,7 @@
     {% else %}
         <div class="viewArticles span10 offset1">
             <div class="row">
-                <h2>{% trans %}There is no entry in this feed{% endtrans %}</h2>
+                <h2>{#{% trans %}#}There is no entry in this feed{#{% endtrans %}#}</h2>
             </div>
         </div><!-- /viewArticles -->
     {% endif %}

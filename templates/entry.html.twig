@@ -26,17 +26,17 @@
         <div id="textArticle">
             <h1>{{ entry.getTitle() }}</h1>
             <p>
-                {% trans 'Published' %}Published <span class="infosArticle"> {{ entry.getCreatedOn() | date('d/m/Y') }}</span>
-                {% trans 'by' %}by <span class="infosArticle">{{ entry.getAuthorName() }}</span>
-                ({% trans %}Last edition on{% endtrans %}<span class="infosArticle"> {{ entry.getUpdatedOn() | date('d/m/Y') }}</span>).
+                {#{% trans 'Published' %}#}Published <span class="infosArticle"> {{ entry.getCreatedOn() | date('d/m/Y') }}</span>
+                {#{% trans 'by' %}#}by <span class="infosArticle">{{ entry.getAuthorName() }}</span>
+                ({#{% trans %}#}Last edition on{#{% endtrans %}#}<span class="infosArticle"> {{ entry.getUpdatedOn() | date('d/m/Y') }}</span>).
                 <br />
                 {% set items = entry.getItems() %}
                 {% if items | length > 1 %}
-                    <span class="infosArticle">{{ items | length }} {% trans 'medias' %}medias </span>{% trans 'available' %}available.
+                    <span class="infosArticle">{{ items | length }} {#{% trans 'medias' %}#}medias </span>{#{% trans 'available' %}#}available.
                 {% elseif items | length == '1' %}
-                    <span class="infosArticle">1 {% trans 'media' %}media </span>{% trans 'available' %}available.
+                    <span class="infosArticle">1 {#{% trans 'media' %}#}media </span>{#{% trans 'available' %}#}available.
                 {% else %}
-                    {% trans %}No media available{% endtrans %}.
+                    {#{% trans %}#}No media available{#{% endtrans %}#}.
                 {% endif %}
             </p>
             {% if entry.getSubtitle() | length > 0 %}
@@ -48,7 +48,7 @@
             {% else %}
             <p>
                 <br />
-                {% trans %}No description available{% endtrans %}.
+                {#{% trans %}#}No description available{#{% endtrans %}#}.
                 <br />
             </p>
             {% endif %}
@@ -84,36 +84,22 @@
                                             {% endfor %}
                                         {# if item is a video #}
                                         {% elseif record.getPhraseaType() == 'video' %}
-                                            {% for subdef in record.getSubdefs() %}
-                                                {% set subName = subdef.getName() %}
-                                                {% if subName == 'preview' and subdef.getPermalink() is not none %}
+                                            {% for subdef in record.getSubdefs() if subdef.getName() == 'preview' %}
+                                                {% if subdef.getPermalink() is not none %}
                                                     {% set playerWidth = subdef.getWidth() %}
                                                     {% set playerHeight = subdef.getHeight() %}
                                                     {% set previewUrl = subdef.getPermalink().getUrl() %}
-
-                                                    {% if record.getThumbnail() is not none %}
-                                                        <img src="{{record.getThumbnail()}}" />
-                                                    {% else %}
-                                                        no thumbnail
-                                                    {% endif %}
-
-                                                    <!--
-                                                    <video id="preview_{{ record.getTitle() }}" class="video-js vjs-default-skin" controls
-                                                        preload="auto" width="{{ playerWidth }}" height="{{ playerHeight }}"
-                                                        poster=""
-                                                        data-setup="{}">
-                                                        <source src="{{ previewUrl }}" type='video/mp4'>
-
-                                                        Your browser does not support the video tag
+                                                    <video src="{{ previewUrl }}" id="preview_{{ record.getTitle() }}" class="video-js vjs-default-skin"
+                                                           controls preload="auto" width="{{ playerWidth }}" height="{{ playerHeight }}"
+                                                           data-setup="{}">
                                                     </video>
-                                                    -->
-                                                {% elseif subName == 'preview' and subdef.getPermalink() is none %}
-                                                    {% trans %}No view available for this document{% endtrans %}
+                                                {% else %}
+                                                    {#{% trans %}#}No view available for this document{#{% endtrans %}#}
                                                 {% endif %}
                                             {% endfor %}
                                         {# if item is anything else #}
                                         {% else %}
-                                            {% trans %}No view available for this document{% endtrans %}
+                                            {#{% trans %}#}No view available for this type of media{#{% endtrans %}#}
                                         {% endif %}
                                     </td>
                                 </tr>
@@ -129,7 +115,7 @@
                     <div class="item active">
                         <table border="0" cellpadding="0" cellspacing="0">
                             <tr>
-                                <td class="noItem" valign="center" align="center">{% trans %}No media available{% endtrans %}</td>
+                                <td class="noItem" valign="center" align="center">{#{% trans %}#}No media available{#{% endtrans %}#}</td>
                             </tr>
                         </table>
                     </div>
