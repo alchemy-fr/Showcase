@@ -7,7 +7,11 @@
     "twig/extensions": "master",
     "silex/silex": "1.0.*",
     "symfony/dependency-injection": ">=2.1",
-    "phraseanet/php-sdk":"master"
+    "phraseanet/php-sdk":"master",
+    "symfony/translation": "2.1.*",
+    "symfony/config": "2.1.*",
+    "symfony/yaml": "2.1.*",
+    "symfony/twig-bridge": "2.1.*"
   },
   "require-dev": {
     "symfony/browser-kit": ">=2.1"

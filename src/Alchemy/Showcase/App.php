@@ -2,22 +2,44 @@
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\Translation\Loader\YamlFileLoader;
 
 $app = new Silex\Application();
 
 $app['debug'] = true;
 
+$app->register(new Silex\Provider\TranslationServiceProvider(), array(
+    'locale_fallback' => 'en_US',
+));
 
+$app['translator.domains'] = array(
+    'messages' => array(
+        'en_US' => __DIR__.'/../../../locales/en.yml',
+        'de_DE' => __DIR__.'/../../../locales/de.yml',
+        'fr_FR' => __DIR__.'/../../../locales/fr.yml',
+    ),
+);
+
+$app['translator.loader'] = $app->share(function () {
+    return new YamlFileLoader();
+});
 
 $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path'       => __DIR__ . '/../../../templates',
 ));
 
 $app->register(new Alchemy\Showcase\Provider\Configuration(), array(
-    'config.file_path' => __DIR__ . '/../../../config/myini.json'
+    'config.file_path' => __DIR__ . '/../../../config/myini.json',
 ));
+
 $app->register(new Alchemy\Showcase\Provider\EntityManager());
+
+
+$app->before(function () use ($app) {
+    $app['locale'] = $app['configuration']->get('locale');
+});
 
 $app->get('/', function(Silex\Application $app) {
         $feedCollection = $app['em']->getRepository('feed')->findAll();
