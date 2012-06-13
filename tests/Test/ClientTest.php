@@ -7,6 +7,13 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
 class ClientTest extends \PHPUnit_Framework_TestCase
 {
+    protected $logger;
+
+    public function setUp()
+    {
+        $this->logger = new \Monolog\Logger('tests');
+        $this->logger->pushHandler(new \Monolog\Handler\NullHandler());
+    }
 
     protected function loadConfiguration($path)
     {
@@ -21,7 +28,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $clientHttp = $this->getMock('\\Guzzle\\Http\\Client');
 
-        new Client($this->loadConfiguration(__DIR__ . '/../ressources/bad_ini.json'), $clientHttp);
+        new Client($this->loadConfiguration(__DIR__ . '/../ressources/bad_ini.json'), $clientHttp, $this->logger);
     }
 
     /**
@@ -30,10 +37,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetAccessToken()
     {
-        $clientHttp = $this->getMock('\\Guzzle\\Http\\Client');
-
-        $client = new Client($this->loadConfiguration(__DIR__ . '/../ressources/ini.json'), $clientHttp);
-        $this->assertEquals("123456789987654321", $client->getAccessToken());
+        $this->assertEquals("123456789987654321", $this->loadClient()->getAccessToken());
     }
 
     /**
@@ -41,10 +45,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetInstanceUri()
     {
-        $clientHttp = $this->getMock('\\Guzzle\\Http\\Client');
-
-        $client = new Client($this->loadConfiguration(__DIR__ . '/../ressources/ini.json'), $clientHttp);
-        $this->assertEquals("http://my.domain.tld", $client->getInstanceUri());
+        $this->assertEquals("http://my.domain.tld", $this->loadClient()->getInstanceUri());
     }
 
     /**
@@ -52,10 +53,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetClientId()
     {
-        $clientHttp = $this->getMock('\\Guzzle\\Http\\Client');
-
-        $client = new Client($this->loadConfiguration(__DIR__ . '/../ressources/ini.json'), $clientHttp);
-        $this->assertEquals("123456789", $client->getClientId());
+        $this->assertEquals("123456789", $this->loadClient()->getClientId());
     }
 
     /**
@@ -63,10 +61,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetClientSecret()
     {
-        $clientHttp = $this->getMock('\\Guzzle\\Http\\Client');
-
-        $client = new Client($this->loadConfiguration(__DIR__ . '/../ressources/ini.json'), $clientHttp);
-        $this->assertEquals("987654321", $client->getClientSecret());
+        $this->assertEquals("987654321", $this->loadClient()->getClientSecret());
     }
 
     /**
@@ -74,10 +69,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetCallbackUri()
     {
-        $clientHttp = $this->getMock('\\Guzzle\\Http\\Client');
-
-        $client = new Client($this->loadConfiguration(__DIR__ . '/../ressources/ini.json'), $clientHttp);
-        $this->assertEquals("http://my.domain.tld/callback", $client->getCallbackUri());
+        $this->assertEquals("http://my.domain.tld/callback", $this->loadClient()->getCallbackUri());
     }
 
     /**
@@ -85,10 +77,7 @@ class ClientTest extends \PHPUnit_Framework_TestCase
      */
     public function testGetApiVersion()
     {
-        $clientHttp = $this->getMock('\\Guzzle\\Http\\Client');
-
-        $client = new Client($this->loadConfiguration(__DIR__ . '/../ressources/ini.json'), $clientHttp);
-        $this->assertEquals("1", $client->getApiVersion());
+        $this->assertEquals("1", $this->loadClient()->getApiVersion());
     }
 
     /**
@@ -98,8 +87,13 @@ class ClientTest extends \PHPUnit_Framework_TestCase
     {
         $clientHttp = $this->getMock('\\Guzzle\\Http\\Client');
 
-        $client = new Client($this->loadConfiguration(__DIR__ . '/../ressources/ini.json'), $clientHttp);
+        $client = new Client($this->loadConfiguration(__DIR__ . '/../ressources/ini.json'), $clientHttp, $this->logger);
 
         $this->assertEquals($clientHttp, $client->getHttpClient());
+    }
+
+    private function loadClient()
+    {
+        return new Client($this->loadConfiguration(__DIR__ . '/../ressources/ini.json'), $this->getMock('\\Guzzle\\Http\\Client'), $this->logger);
     }
 }

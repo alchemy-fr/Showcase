@@ -18,7 +18,7 @@ class EntityManager implements ServiceProviderInterface
 
         $app['apiClient'] = $app->share(function () use ($app)
                 {
-                    return new ApiClient($app['configuration'], $app['httpClient']);
+                    return new ApiClient($app['configuration'], $app['httpClient'], $app['monolog']);
                 });
 
         $app['em'] = $app->share(function () use ($app)

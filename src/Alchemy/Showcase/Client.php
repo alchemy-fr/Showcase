@@ -18,7 +18,7 @@ class Client extends PhraseanetSDK\Client
     protected $apiVersion;
     protected $devToken;
 
-    public function __construct(ParameterBag $configuration, HttpClient $clientHttp)
+    public function __construct(ParameterBag $configuration, HttpClient $clientHttp, \Monolog\Logger $logger)
     {
         try
         {
@@ -50,6 +50,7 @@ class Client extends PhraseanetSDK\Client
                 , $this->clientId
                 , $this->clientSecret
                 , $clientHttp
+                , $logger
         );
     }
 

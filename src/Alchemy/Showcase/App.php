@@ -29,6 +29,19 @@ $app['translator.domains'] = array(
     ),
 );
 
+$app['monolog'] = $app->share(function() use ($app) {
+
+        $logger = new \Monolog\Logger('Showcase');
+
+        if ($app['debug'] === true) {
+            $logger->pushHandler(new \Monolog\Handler\RotatingFileHandler(__DIR__ . '/../../../queries.log', 1));
+        } else {
+            $logger->pushHandler(new \Monolog\Handler\NullHandler());
+        }
+        
+        return $logger;
+    });
+
 $app['translator.loader'] = $app->share(function () {
         return new YamlFileLoader();
     });
