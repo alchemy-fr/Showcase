@@ -31,17 +31,12 @@
                                 {% if items | length > 0 %}
                                     {% set firstItem = items['0'] %}
                                     {% set record = firstItem.getRecord() %}
-                                    {% if record.getPhraseaType() != 'image' and record.getPhraseaType() != 'video' %}
-                                        {% trans %}No preview available for this document{% endtrans %}
-                                    {% else %}
-                                        {% for subdef in record.getSubdefs() if subdef.getName() == 'preview' %}
-                                            {% if subdef.getPermalink() is not none and subdef.getPlayerType() == 'IMAGE' %}
-                                                {% set previewUrl = subdef.getPermalink().getUrl() %}
-                                                <img src="{{ previewUrl }}" alt="{{ entry.getTitle() }}" />
-                                            {% else %}
-                                                {% trans %}No preview available for this document{% endtrans %}
-                                            {% endif %}
-                                        {% endfor %}
+                                    {% if record.getThumbnail() is not none and record.getThumbnail().getPlayerType() == 'image' %}
+                                        {% if record.getThumbnail() is not none %}
+                                        <img src="{{ record.getThumbnail().getPermalink().getUrl() }}" alt="{{ entry.getTitle() }}" />
+                                        {% else %}
+                                            {% trans %}No media available{% endtrans %}
+                                        {% endif %}
                                     {% endif %}
                                 {% else %}
                                     {% trans %}No media available{% endtrans %}
