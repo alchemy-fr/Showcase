@@ -1,47 +1,55 @@
 <?php
 
+namespace Alchemy\Showcase;
+
+use Alchemy\Showcase\Provider\Configuration;
+use Alchemy\Showcase\Provider\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
+use Silex\Application;
+use Silex\Provider\TranslationServiceProvider;
+use Silex\Provider\TwigServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 
-$app = new Silex\Application();
+$app = new Application();
 
-$app['debug'] = true;
+$app['debug'] = false;
 
-$app->register(new Silex\Provider\TranslationServiceProvider(), array(
+$app->register(new TranslationServiceProvider(), array(
     'locale_fallback' => 'en_US',
 ));
 
 $app['translator.domains'] = array(
     'messages' => array(
-        'en_US' => __DIR__.'/../../../locales/en.yml',
-        'de_DE' => __DIR__.'/../../../locales/de.yml',
-        'fr_FR' => __DIR__.'/../../../locales/fr.yml',
+        'en_US' => __DIR__ . '/../../../locales/en.yml',
+        'de_DE' => __DIR__ . '/../../../locales/de.yml',
+        'fr_FR' => __DIR__ . '/../../../locales/fr.yml',
     ),
 );
 
 $app['translator.loader'] = $app->share(function () {
-    return new YamlFileLoader();
-});
+        return new YamlFileLoader();
+    });
 
-$app->register(new Silex\Provider\TwigServiceProvider(), array(
-    'twig.path'       => __DIR__ . '/../../../templates',
+$app->register(new TwigServiceProvider(), array(
+    'twig.path' => __DIR__ . '/../../../templates',
+    'cache'     => __DIR__ . '/../../../cache/',
 ));
 
-$app->register(new Alchemy\Showcase\Provider\Configuration(), array(
+$app->register(new Configuration(), array(
     'config.file_path' => __DIR__ . '/../../../config/myini.json',
 ));
 
-$app->register(new Alchemy\Showcase\Provider\EntityManager());
+$app->register(new EntityManager());
 
 
 $app->before(function () use ($app) {
-    $app['locale'] = $app['configuration']->get('locale');
-});
+        $app['locale'] = $app['configuration']->get('locale');
+    });
 
-$app->get('/', function(Silex\Application $app) {
+$app->get('/', function(Application $app) {
         $feedCollection = $app['em']->getRepository('feed')->findAll();
 
         $templateDatas = array(
@@ -52,7 +60,7 @@ $app->get('/', function(Silex\Application $app) {
         return $app['twig']->render('index.html.twig', $templateDatas);
     });
 
-$app->get('/feed/{feedId}/{offset}/{perPage}', function(Silex\Application $app, $feedId, $offset, $perPage) {
+$app->get('/feed/{feedId}/{offset}/{perPage}', function(Application $app, $feedId, $offset, $perPage) {
             $feed = $app['em']->getRepository('feed')->findById($feedId, $offset, $perPage);
 
             $feedCollection = $app['em']->getRepository('feed')->findAll();
@@ -68,7 +76,7 @@ $app->get('/feed/{feedId}/{offset}/{perPage}', function(Silex\Application $app, 
     ->assert('offset', '\d+')
     ->assert('perPage', '\d+');
 
-$app->get('/entry/{feedId}/{offset}/{perPage}/{entryId}', function(Silex\Application $app, $feedId, $offset, $perPage, $entryId) {
+$app->get('/entry/{feedId}/{offset}/{perPage}/{entryId}', function(Application $app, $feedId, $offset, $perPage, $entryId) {
             $feed = $app['em']->getRepository('feed')->findById($feedId, $offset, $perPage);
 
             $entries = $feed->getEntries();
