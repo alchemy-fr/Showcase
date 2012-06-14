@@ -17,6 +17,12 @@ $app = new Application();
 
 $app['debug'] = false;
 
+if ($app['debug'] == false) {
+    ini_set('display_errors', 'off');
+} else {
+    ini_set('display_errors', 'on');
+}
+
 $app->register(new TranslationServiceProvider(), array(
     'locale_fallback' => 'en_US',
 ));

@@ -32,7 +32,7 @@
                                     {% set firstItem = items['0'] %}
                                     {% set record = firstItem.getRecord() %}
                                     {% if record.getThumbnail() is not none and record.getThumbnail().getPlayerType() == 'IMAGE' %}
-                                        b{% if record.getThumbnail() is not none %}
+                                        {% if record.getThumbnail() is not none %}
                                         <img src="{{ record.getThumbnail().getPermalink().getUrl() }}" alt="{{ entry.getTitle() }}" />
                                         {% else %}
                                             {% trans %}No media available{% endtrans %}
