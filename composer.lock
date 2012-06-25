@@ -29,7 +29,7 @@
         {
             "package": "phraseanet/silex-sdk-provider",
             "version": "dev-master",
-            "source-reference": "e43281085a75c29158627f5773fae2399701b63a"
+            "source-reference": "8237f23fd9bd8ddb8eb918f3d58bc26b96b37c10"
         },
         {
             "package": "pimple/pimple",
