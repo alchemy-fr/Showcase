@@ -36,14 +36,14 @@ $app->register(new TranslationServiceProvider(), array(
 ));
 
 $app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
-    $translator->addLoader('yaml', new YamlFileLoader());
+            $translator->addLoader('yaml', new YamlFileLoader());
 
-    $translator->addResource('yaml', __DIR__ . '/../../../locales/en.yml', 'en_US');
-    $translator->addResource('yaml', __DIR__ . '/../../../locales/de.yml', 'de_DE');
-    $translator->addResource('yaml', __DIR__ . '/../../../locales/fr.yml', 'fr_FR');
+            $translator->addResource('yaml', __DIR__ . '/../../../locales/en.yml', 'en_US');
+            $translator->addResource('yaml', __DIR__ . '/../../../locales/de.yml', 'de_DE');
+            $translator->addResource('yaml', __DIR__ . '/../../../locales/fr.yml', 'fr_FR');
 
-    return $translator;
-}));
+            return $translator;
+        }));
 
 $app->register(new \Silex\Provider\MonologServiceProvider(), array(
     'monolog.logfile' => __DIR__ . '/../../../queries.log',
@@ -55,13 +55,16 @@ $app->register(new PhraseanetSDKServiceProvider(), array(
     'phraseanet-sdk.apiKey'      => $app['configuration']->get('client_id'),
     'phraseanet-sdk.apiSecret'   => $app['configuration']->get('client_secret'),
     'phraseanet-sdk.apiDevToken' => $app['configuration']->get('dev_token'),
+    'phraseanet-sdk.cache'       => $app['configuration']->get('cache'),
+    'phraseanet-sdk.cache_host'  => $app['configuration']->get('cache_host'),
+    'phraseanet-sdk.cache_port'  => $app['configuration']->get('cache_port'),
 ));
 
 $app->register(new GuzzleServiceProvider());
 
 $app->register(new TwigServiceProvider(), array(
-    'twig.path' => __DIR__ . '/../../../templates',
-    'cache'     => __DIR__ . '/../../../cache/',
+    'twig.path'    => __DIR__ . '/../../../templates',
+    'twig.options' => array('cache' => __DIR__ . '/../../../cache/'),
 ));
 
 $app->register(new EntityManager());

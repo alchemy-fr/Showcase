@@ -5,5 +5,8 @@
     "callback_uri": "https://my.instance.tld/my/callback",
     "api_version": "1",
     "dev_token": "123456789",
-    "locale": "fr_FR"
+    "locale": "fr_FR",
+    "cache":"Memcache",
+    "cache_host":"localhost",
+    "cache_port":11211
 }
