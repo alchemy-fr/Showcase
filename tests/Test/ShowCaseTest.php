@@ -13,8 +13,10 @@ class ShowcaseTest extends WebTestCase
     public function createApplication()
     {
         $app = require __DIR__ . '/../../src/Alchemy/Showcase/App.php';
+
         $app['debug'] = true;
         unset($app['exception_handler']);
+
         return $app;
     }
 
@@ -70,7 +72,7 @@ class ShowcaseTest extends WebTestCase
     public function testListeEntriesMalformedResponseException()
     {
         $this->markTestIncomplete('does not work');
-        
+
         $client = $this->createClient();
 
         $responseOneFeed = new Response($this->getSampleResponse('badResult'));
@@ -100,7 +102,7 @@ class ShowcaseTest extends WebTestCase
     public function testOneEntry()
     {
         $this->markTestIncomplete('does not work');
-        
+
         $client = $this->createClient();
 
         $responseOneFeed = new Response($this->getSampleResponse('findById'));
@@ -120,12 +122,12 @@ class ShowcaseTest extends WebTestCase
 
 
         $this->app['em'] = new Manager($apiClient);
-        
+
         $client->request('GET', '/entry/1457/0/5/1661');
-        
+
         $this->assertTrue($client->getResponse()->isOk());
     }
-    
+
 //    public function testOneEntryNotFoundExceptions()
 //    {
 //        $client = $this->createClient();
@@ -147,9 +149,9 @@ class ShowcaseTest extends WebTestCase
 //
 //
 //        $this->app['em'] = new Manager($apiClient);
-//        
+//
 //        $client->request('GET', '/entry/1457/0/5/9999999');
-//        
+//
 //        $this->assertFalse($client->getResponse()->isOk());
 //        $this->assertEquals(404, $client->getResponse()->getStatusCode());
 //    }
@@ -157,7 +159,7 @@ class ShowcaseTest extends WebTestCase
     private function getSampleResponse($filename)
     {
         $filename = __DIR__ . '/../ressources/feed/' . $filename . '.json';
-        
+
         return json_decode(file_get_contents($filename));
     }
 

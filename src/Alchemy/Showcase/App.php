@@ -2,12 +2,16 @@
 
 namespace Alchemy\Showcase;
 
+use Alchemy\Phrasea\SDK\PhraseanetSDKServiceProvider;
 use Alchemy\Showcase\Provider\Configuration;
 use Alchemy\Showcase\Provider\EntityManager;
 use Doctrine\Common\Collections\ArrayCollection;
+use Guzzle\GuzzleServiceProvider;
+use Monolog\Logger;
 use Silex\Application;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\TwigServiceProvider;
+use Silex\Provider\MonologServiceProvider;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -23,46 +27,44 @@ if ($app['debug'] == false) {
     ini_set('display_errors', 'on');
 }
 
+$app->register(new Configuration(), array(
+    'config.file_path' => __DIR__ . '/../../../config/myini.json',
+));
+
 $app->register(new TranslationServiceProvider(), array(
     'locale_fallback' => 'en_US',
 ));
 
-$app['translator.domains'] = array(
-    'messages' => array(
-        'en_US' => __DIR__ . '/../../../locales/en.yml',
-        'de_DE' => __DIR__ . '/../../../locales/de.yml',
-        'fr_FR' => __DIR__ . '/../../../locales/fr.yml',
-    ),
-);
+$app['translator'] = $app->share($app->extend('translator', function($translator, $app) {
+    $translator->addLoader('yaml', new YamlFileLoader());
 
-$app['monolog'] = $app->share(function() use ($app) {
+    $translator->addResource('yaml', __DIR__ . '/../../../locales/en.yml', 'en_US');
+    $translator->addResource('yaml', __DIR__ . '/../../../locales/de.yml', 'de_DE');
+    $translator->addResource('yaml', __DIR__ . '/../../../locales/fr.yml', 'fr_FR');
 
-        $logger = new \Monolog\Logger('Showcase');
+    return $translator;
+}));
 
-        if ($app['debug'] === true) {
-            $logger->pushHandler(new \Monolog\Handler\RotatingFileHandler(__DIR__ . '/../../../queries.log', 1));
-        } else {
-            $logger->pushHandler(new \Monolog\Handler\NullHandler());
-        }
-        
-        return $logger;
-    });
+$app->register(new \Silex\Provider\MonologServiceProvider(), array(
+    'monolog.logfile' => __DIR__ . '/../../../queries.log',
+    'monolog.level'   => $app['debug'] ? Logger::DEBUG : Logger::ALERT,
+));
 
-$app['translator.loader'] = $app->share(function () {
-        return new YamlFileLoader();
-    });
+$app->register(new PhraseanetSDKServiceProvider(), array(
+    'phraseanet-sdk.apiUrl'      => $app['configuration']->get('instance_uri'),
+    'phraseanet-sdk.apiKey'      => $app['configuration']->get('client_id'),
+    'phraseanet-sdk.apiSecret'   => $app['configuration']->get('client_secret'),
+    'phraseanet-sdk.apiDevToken' => $app['configuration']->get('dev_token'),
+));
+
+$app->register(new GuzzleServiceProvider());
 
 $app->register(new TwigServiceProvider(), array(
     'twig.path' => __DIR__ . '/../../../templates',
     'cache'     => __DIR__ . '/../../../cache/',
 ));
 
-$app->register(new Configuration(), array(
-    'config.file_path' => __DIR__ . '/../../../config/myini.json',
-));
-
 $app->register(new EntityManager());
-
 
 $app->before(function () use ($app) {
         $app['locale'] = $app['configuration']->get('locale');

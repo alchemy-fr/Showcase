@@ -4,7 +4,6 @@ namespace Alchemy\Showcase\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use Alchemy\Showcase\Client as ApiClient;
 use PhraseanetSDK\Tools\Entity\Manager;
 
 class EntityManager implements ServiceProviderInterface
@@ -12,24 +11,15 @@ class EntityManager implements ServiceProviderInterface
 
     public function register(Application $app)
     {
-        $app['httpClient'] = new \Guzzle\Http\Client();
-
-
-
-        $app['apiClient'] = $app->share(function () use ($app)
-                {
-                    return new ApiClient($app['configuration'], $app['httpClient'], $app['monolog']);
-                });
-
         $app['em'] = $app->share(function () use ($app)
                 {
-                    return new Manager($app['apiClient']);
+                    return new Manager($app['phraseanet-sdk']);
                 });
     }
 
     public function boot(Application $app)
     {
-        
+
     }
 }
 
