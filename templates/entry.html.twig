@@ -18,7 +18,7 @@
 {% block title %}- {{ entry.getTitle() }}{% endblock %}
 
 {% block headerTitle %}
-    {{ macros.navFeedList(feeds, feed) }}
+    {#{{ macros.navFeedList(feeds, feed) }}#}
 {% endblock %}
 
 {% block content %}
@@ -53,7 +53,7 @@
             </p>
             {% endif %}
             <br />
-            <a class="logoMinus" href="/feed/{{ feed.getId() }}/0/5"></a>
+            <a class="logoMinus" href="{{ app.request.server.get('HTTP_REFERER') }}"></a>
             <br />
        </div><!-- /textArticle -->
     </div><!-- /contentArticle -->
@@ -123,5 +123,5 @@
 {% endblock %}
 
 {% block footer %}
-    {{ macros.navFeedList(feeds, feed) }}
+    {#{{ macros.navFeedList(feeds, feed) }}#}
 {% endblock %}

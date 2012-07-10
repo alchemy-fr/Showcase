@@ -19,7 +19,7 @@ use Symfony\Component\Translation\Loader\YamlFileLoader;
 
 $app = new Application();
 
-$app['debug'] = false;
+$app['debug'] = true;
 
 if ($app['debug'] == false) {
     ini_set('display_errors', 'off');
@@ -84,46 +84,18 @@ $app->get('/', function(Application $app) {
         return $app['twig']->render('index.html.twig', $templateDatas);
     });
 
-$app->get('/feed/{feedId}/{offset}/{perPage}', function(Application $app, $feedId, $offset, $perPage) {
-            $feed = $app['em']->getRepository('feed')->findById($feedId, $offset, $perPage);
+$app->get('/feed/{feedId}', function(Application $app, Request $request, $feedId) {
+            $feed = $app['em']->getRepository('feed')->findById($feedId, $request->get('offset', 0), $request->get('perPage', 10));
 
-            $feedCollection = $app['em']->getRepository('feed')->findAll();
-
-            $templateDatas = array(
-                'feed'  => $feed
-                , 'feeds' => $feedCollection
-            );
-
-            return $app['twig']->render('feed.html.twig', $templateDatas);
+            return $app['twig']->render('feed.html.twig', array('feed'  => $feed));
         })
-    ->assert('feedId', '\d+')
-    ->assert('offset', '\d+')
-    ->assert('perPage', '\d+');
+    ->assert('feedId', '\d+');
 
-$app->get('/entry/{feedId}/{offset}/{perPage}/{entryId}', function(Application $app, $feedId, $offset, $perPage, $entryId) {
-            $feed = $app['em']->getRepository('feed')->findById($feedId, $offset, $perPage);
+$app->get('/entry/{entryId}', function(Application $app, $entryId) {
+            $entry = $app['em']->getRepository('entry')->findById($entryId);
 
-            $entries = $feed->getEntries();
-
-            foreach ($entries as $entry) {
-                if ($entry->getId() == $entryId) {
-                    $feedCollection = $app['em']->getRepository('feed')->findAll();
-
-                    $templateDatas = array(
-                        'entry' => $entry
-                        , 'feed'  => $feed
-                        , 'feeds' => $feedCollection
-                    );
-
-                    return $app['twig']->render('entry.html.twig', $templateDatas);
-                }
-            }
-
-            throw new NotFoundHttpException();
+            return $app['twig']->render('entry.html.twig', array('entry' => $entry));
         })
-    ->assert('feedId', '\d+')
-    ->assert('offset', '\d+')
-    ->assert('perPage', '\d+')
     ->assert('entryId', '\d+');
 
 //$app->error(function($e, $code) use ($app)

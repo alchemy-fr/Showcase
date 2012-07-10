@@ -3,7 +3,7 @@
 {% block headerTitle %}
     <p>
         {% for feed in feeds %}
-            <a href="/feed/{{ feed.getId() }}/0/5">{{ feed.getTitle() }}</a>
+            <a href="/feed/{{ feed.getId() }}?offset_start=0&per_page=5">{{ feed.getTitle() }}</a>
             {% if not loop.last %}
                 <span class="slash">/</span>
             {% endif %}
