@@ -1,5 +1,5 @@
 {
-    "hash": "c631720ce9ae666c2056584fcee51585",
+    "hash": "d58d2b0cd9f905bb0a9e2ab194bacae8",
     "packages": [
         {
             "package": "doctrine/common",
@@ -19,9 +19,7 @@
         },
         {
             "package": "monolog/monolog",
-            "version": "dev-master",
-            "source-reference": "6cbdc0410c08fb03d7eee6b69126661fcbb89c41",
-            "commit-date": "1340715384"
+            "version": "1.1.0"
         },
         {
             "package": "phraseanet/php-sdk",
@@ -46,6 +44,12 @@
             "version": "dev-master",
             "source-reference": "d2cfa2f02f50abef65c238747c753a5f6786f6be",
             "commit-date": "1341139100"
+        },
+        {
+            "package": "silex/silex",
+            "version": "dev-master",
+            "alias-pretty-version": "1.0.x-dev",
+            "alias-version": "1.0.9999999.9999999-dev"
         },
         {
             "package": "silex/silex",
@@ -176,7 +180,7 @@
     "aliases": [
 
     ],
-    "minimum-stability": "stable",
+    "minimum-stability": "dev",
     "stability-flags": {
         "twig/extensions": 20,
         "silex/silex": 20,
