@@ -1,5 +1,5 @@
 {
-    "hash": "0a1b3af906dbbd1b858b4a6177953d17",
+    "hash": "c631720ce9ae666c2056584fcee51585",
     "packages": [
         {
             "package": "doctrine/common",
@@ -26,14 +26,14 @@
         {
             "package": "phraseanet/php-sdk",
             "version": "dev-master",
-            "source-reference": "b737f177fb8d46e646901df450f8bc2b3701ca00",
-            "commit-date": "1341851127"
+            "source-reference": "697c6903f91b09a20f92d277b18ec0b2be424244",
+            "commit-date": "1341931682"
         },
         {
             "package": "phraseanet/silex-sdk-provider",
             "version": "dev-master",
-            "source-reference": "17dd95fa3027611da59926b5fe01ef088bbc601a",
-            "commit-date": "1340637637"
+            "source-reference": "b3bf9bf6b80c72ffd05f2efc011300abc852d40f",
+            "commit-date": "1341931514"
         },
         {
             "package": "pimple/pimple",
@@ -50,12 +50,6 @@
         {
             "package": "silex/silex",
             "version": "dev-master",
-            "alias-pretty-version": "1.0.x-dev",
-            "alias-version": "1.0.9999999.9999999-dev"
-        },
-        {
-            "package": "silex/silex",
-            "version": "dev-master",
             "source-reference": "4679d476aee0a5981b13d4ac899a8ef72b8b060c",
             "commit-date": "1341899486"
         },
@@ -68,8 +62,14 @@
         {
             "package": "symfony/config",
             "version": "dev-master",
-            "source-reference": "bb18f5131f785483d3750a771df594eed1e5f863",
-            "commit-date": "1341838460"
+            "source-reference": "c69e45e6744a607a8b2b9067008a47a0517c7cad",
+            "commit-date": "1341929657"
+        },
+        {
+            "package": "symfony/dependency-injection",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
         },
         {
             "package": "symfony/dependency-injection",
@@ -110,8 +110,8 @@
         {
             "package": "symfony/http-kernel",
             "version": "dev-master",
-            "source-reference": "ff65fbaa20ace7e39ce6df92afe97c5c9586a2d1",
-            "commit-date": "1341849771"
+            "source-reference": "b9fa4070ef08ed1d0f39e5e51f38cdc985742e99",
+            "commit-date": "1341931207"
         },
         {
             "package": "symfony/routing",
@@ -177,7 +177,10 @@
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ]
+    "stability-flags": {
+        "twig/extensions": 20,
+        "silex/silex": 20,
+        "phraseanet/php-sdk": 20,
+        "phraseanet/silex-sdk-provider": 20
+    }
 }
