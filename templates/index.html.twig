@@ -1,14 +1,14 @@
 {% extends "base.html.twig" %}
 
 {% block headerTitle %}
-    <p>
+    {#<p>
         {% for feed in feeds %}
             <a href="/feed/{{ feed.getId() }}?offset_start=0&per_page=5">{{ feed.getTitle() }}</a>
             {% if not loop.last %}
                 <span class="slash">/</span>
             {% endif %}
         {% endfor %}
-    </p>
+    </p>#}
 {% endblock %}
 
 {% block content %}
@@ -45,12 +45,12 @@
 {% endblock %}
 
 {% block footer %}
-    <p>
+    {#<p>
         {% for feed in feeds %}
             <a href="/feed/{{ feed.getId() }}/0/5">{{ feed.getTitle() }}</a>
             {% if not loop.last %}
                 <span class="slash">/</span>
             {% endif %}
         {% endfor %}
-    </p>
+    </p>#}
 {% endblock %}

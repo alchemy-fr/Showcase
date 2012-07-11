@@ -18,7 +18,7 @@
 {% block title %}- {{ entry.getTitle() }}{% endblock %}
 
 {% block headerTitle %}
-    {#{{ macros.navFeedList(feeds, feed) }}#}
+    {{ macros.navFeedList(feeds, fromFeedId) }}
 {% endblock %}
 
 {% block content %}
@@ -123,5 +123,5 @@
 {% endblock %}
 
 {% block footer %}
-    {#{{ macros.navFeedList(feeds, feed) }}#}
+    {{ macros.navFeedList(feeds, fromFeedId) }}
 {% endblock %}

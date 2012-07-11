@@ -3,9 +3,9 @@
 
 {% block title %}- {{ feed.getTitle() }}{% endblock %}
 
-{#{% block headerTitle %}
-    {{ macros.navFeedList(feeds, feed) }}
-{% endblock %}#}
+{% block headerTitle %}
+    {{ macros.navFeedList(feeds, feed.getId()) }}
+{% endblock %}
 
 {% block content %}
     {% set entries = feed.getEntries(0, 10) %}
@@ -14,7 +14,7 @@
             <div class="viewArticles span10 offset1">
                 <div class="row">
                     <div class="previewArticle span6">
-                        <h1><a href="/entry/{{ entry.getId() }}">{{ entry.getTitle() }}</a></h1>
+                        <h1><a href="/entry/{{ entry.getId() }}?from_feed={{ feed.getId() }}">{{ entry.getTitle() }}</a></h1>
                         <p>
                             {% trans %}Published on{% endtrans %}<span class="infosArticle"> {{ entry.getCreatedOn() | date('d/m/Y') }}</span>
                             {% trans %}by{% endtrans %}<span class="infosArticle"> {{ entry.getAuthorName() }}</span>.
@@ -22,7 +22,7 @@
                         <p class="desc">
                             {{ entry.getSubtitle() }}
                         </p>
-                        <a class="logoPlus" href="/entry/{{ entry.getId() }}"></a>
+                        <a class="logoPlus" href="/entry/{{ entry.getId() }}?from_feed={{ feed.getId() }}"></a>
                     </div><!-- /previewArticle -->
                     <div class="previewImage span4">
                         <a href="/entry/{{ entry.getId() }}">
@@ -62,5 +62,5 @@
 {% endblock %}
 
 {% block footer %}
-    {#{{ macros.navFeedList(feeds, feed) }}#}
+    {{ macros.navFeedList(feeds, feed.getId()) }}
 {% endblock %}

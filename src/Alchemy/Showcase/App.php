@@ -71,13 +71,12 @@ $app->before(function () use ($app) {
         ));
 
         $app['locale'] = $app['configuration']->get('locale');
+        $app['feeds_collection'] = $app['em']->getRepository('feed')->findAll();
     });
 
 $app->get('/', function(Application $app) {
-        $feedCollection = $app['em']->getRepository('feed')->findAll();
-
         $templateDatas = array(
-            'feeds'         => $feedCollection,
+            'feeds'         => $app['feeds_collection'],
             'configuration' => $app['configuration'],
         );
 
@@ -85,16 +84,27 @@ $app->get('/', function(Application $app) {
     });
 
 $app->get('/feed/{feedId}', function(Application $app, Request $request, $feedId) {
-            $feed = $app['em']->getRepository('feed')->findById($feedId, $request->get('offset', 0), $request->get('perPage', 10));
+            $feed = $app['em']->getRepository('feed')->findById($feedId);
 
-            return $app['twig']->render('feed.html.twig', array('feed' => $feed));
+            $templateDatas = array(
+                'feeds'     => $app['feeds_collection'],
+                'feed'      => $feed,
+            );
+
+            return $app['twig']->render('feed.html.twig', $templateDatas);
         })
     ->assert('feedId', '\d+');
 
-$app->get('/entry/{entryId}', function(Application $app, $entryId) {
+$app->get('/entry/{entryId}', function(Application $app, Request $request, $entryId) {
             $entry = $app['em']->getRepository('entry')->findById($entryId);
 
-            return $app['twig']->render('entry.html.twig', array('entry' => $entry));
+            $templateDatas = array(
+                'feeds'     => $app['feeds_collection'],
+                'fromFeedId'=> $request->get('from_feed'),
+                'entry'     => $entry,
+            );
+
+            return $app['twig']->render('entry.html.twig', $templateDatas);
         })
     ->assert('entryId', '\d+');
 
