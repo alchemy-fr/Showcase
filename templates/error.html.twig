@@ -1,17 +1,13 @@
 {% extends "base.html.twig" %}
-
-
+{% import "macros.html.twig" as macros %}
 
 {% block headerTitle %}
 {% endblock %}
 
 {% block content %}
-
-<div class="span12">
-    Error {{ code }}.  {{ message }} {{ details }}
-</div>
-
-
+    <div class="span10 offset1">
+        <p><em>Error {{ code }}</em>. {{ message }} {{ details }}</p>
+    </div>
 {% endblock %}
 
 {% block footer %}
