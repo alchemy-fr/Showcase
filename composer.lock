@@ -4,12 +4,6 @@
         {
             "package": "doctrine/common",
             "version": "dev-master",
-            "alias-pretty-version": "2.3.x-dev",
-            "alias-version": "2.3.9999999.9999999-dev"
-        },
-        {
-            "package": "doctrine/common",
-            "version": "dev-master",
             "source-reference": "b3afbb80506d909743475c5b0904285ab0c07941",
             "commit-date": "1341670930"
         },
@@ -50,12 +44,6 @@
             "version": "dev-master",
             "source-reference": "d2cfa2f02f50abef65c238747c753a5f6786f6be",
             "commit-date": "1341139100"
-        },
-        {
-            "package": "silex/silex",
-            "version": "dev-master",
-            "alias-pretty-version": "1.0.x-dev",
-            "alias-version": "1.0.9999999.9999999-dev"
         },
         {
             "package": "silex/silex",
