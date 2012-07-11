@@ -8,5 +8,7 @@
     "locale": "fr_FR",
     "cache":"Memcache",
     "cache_host":"localhost",
-    "cache_port":11211
+    "cache_port":11211,
+    "cache_ttl" : 300,
+    "cache_revalidate" : "skip"
 }

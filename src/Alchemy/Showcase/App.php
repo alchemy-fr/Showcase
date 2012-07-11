@@ -5,16 +5,13 @@ namespace Alchemy\Showcase;
 use Alchemy\Phrasea\SDK\PhraseanetSDKServiceProvider;
 use Alchemy\Showcase\Provider\Configuration;
 use Alchemy\Showcase\Provider\EntityManager;
-use Doctrine\Common\Collections\ArrayCollection;
 use Guzzle\GuzzleServiceProvider;
 use Monolog\Logger;
+use PhraseanetSDK\Exception as PhraseaException;
 use Silex\Application;
 use Silex\Provider\TranslationServiceProvider;
 use Silex\Provider\TwigServiceProvider;
-use Silex\Provider\MonologServiceProvider;
-use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Translation\Loader\YamlFileLoader;
 
 $app = new Application();
@@ -50,16 +47,6 @@ $app->register(new \Silex\Provider\MonologServiceProvider(), array(
     'monolog.level'   => $app['debug'] ? Logger::DEBUG : Logger::ALERT,
 ));
 
-$app->register(new PhraseanetSDKServiceProvider(), array(
-    'phraseanet-sdk.apiUrl'      => $app['configuration']->get('instance_uri'),
-    'phraseanet-sdk.apiKey'      => $app['configuration']->get('client_id'),
-    'phraseanet-sdk.apiSecret'   => $app['configuration']->get('client_secret'),
-    'phraseanet-sdk.apiDevToken' => $app['configuration']->get('dev_token'),
-    'phraseanet-sdk.cache'       => $app['configuration']->get('cache'),
-    'phraseanet-sdk.cache_host'  => $app['configuration']->get('cache_host'),
-    'phraseanet-sdk.cache_port'  => $app['configuration']->get('cache_port'),
-));
-
 $app->register(new GuzzleServiceProvider());
 
 $app->register(new TwigServiceProvider(), array(
@@ -70,6 +57,19 @@ $app->register(new TwigServiceProvider(), array(
 $app->register(new EntityManager());
 
 $app->before(function () use ($app) {
+
+        $app->register(new PhraseanetSDKServiceProvider(), array(
+            'phraseanet-sdk.apiUrl'           => $app['configuration']->get('instance_uri'),
+            'phraseanet-sdk.apiKey'           => $app['configuration']->get('client_id'),
+            'phraseanet-sdk.apiSecret'        => $app['configuration']->get('client_secret'),
+            'phraseanet-sdk.apiDevToken'      => $app['configuration']->get('dev_token'),
+            'phraseanet-sdk.cache'            => $app['configuration']->get('cache'),
+            'phraseanet-sdk.cache_host'       => $app['configuration']->get('cache_host'),
+            'phraseanet-sdk.cache_port'       => $app['configuration']->get('cache_port'),
+            'phraseanet-sdk.cache_ttl'        => $app['configuration']->get('cache_ttl'),
+            'phraseanet-sdk.cache_revalidate' => $app['configuration']->get('cache_revalidate')
+        ));
+
         $app['locale'] = $app['configuration']->get('locale');
     });
 
@@ -87,7 +87,7 @@ $app->get('/', function(Application $app) {
 $app->get('/feed/{feedId}', function(Application $app, Request $request, $feedId) {
             $feed = $app['em']->getRepository('feed')->findById($feedId, $request->get('offset', 0), $request->get('perPage', 10));
 
-            return $app['twig']->render('feed.html.twig', array('feed'  => $feed));
+            return $app['twig']->render('feed.html.twig', array('feed' => $feed));
         })
     ->assert('feedId', '\d+');
 
@@ -98,19 +98,31 @@ $app->get('/entry/{entryId}', function(Application $app, $entryId) {
         })
     ->assert('entryId', '\d+');
 
-//$app->error(function($e, $code) use ($app)
-//        {
-//            switch ($code)
-//            {
-//                case 404:
-//                    $message = 'The requested page could not be found.';
-//                    break;
-//                default:
-//                    $message = 'We are sorry, but something went terribly wrong.';
-//                    $code = 500;
-//            }
-//
-//            return new Response($message, $code);
-//        });
+$app->error(function($e, $code) use ($app) {
+        $details = $app['debug'] ? $e->getMessage() : '';
+        if ($e instanceof PhraseaException\ExceptionInterface) {
+            if ($e instanceof PhraseaException\NotFoundException) {
+                $code = 404;
+                $message = 'The requested API ressources could not be found.';
+            } elseif ($e instanceof PhraseaException\UnauthorizedException) {
+                $code = 401;
+                $message = 'Your are unauthorized to access the requested API ressources.';
+            } else {
+                $code = 500;
+                $message = 'The API could not fetch the requested ressource.';
+            }
+        } else {
+            switch ($code) {
+                case 404:
+                    $message = 'The requested page could not be found.';
+                    break;
+                default:
+                    $message = 'We are sorry, but something went terribly wrong.';
+                    $code = 500;
+            }
+        }
+
+        return $app['twig']->render('error.html.twig', array('message' => $message, 'code'    => $code, 'details' => $details));
+    });
 
 return $app;
