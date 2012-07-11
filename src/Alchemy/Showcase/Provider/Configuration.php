@@ -16,13 +16,16 @@ class Configuration implements ServiceProviderInterface
 
                 $configFilePath = isset($app['config.file_path']) ? $app['config.file_path'] : $default;
 
-                return new ParameterBag(json_decode(file_get_contents($configFilePath), true));
+                if (null === $conf = json_decode(file_get_contents($configFilePath), true)) {
+                    throw new RuntimeException('Json Configuration file cannot be decoded or the encoded');
+                }
+                return new ParameterBag($conf);
             });
     }
-    
+
     public function boot(Application $app)
     {
-        
+
     }
 }
 
