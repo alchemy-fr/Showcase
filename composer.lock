@@ -1,6 +1,12 @@
 {
-    "hash": "d58d2b0cd9f905bb0a9e2ab194bacae8",
+    "hash": "7e124d63814ec5374d78ae817a7ca222",
     "packages": [
+        {
+            "package": "doctrine/common",
+            "version": "dev-master",
+            "alias-pretty-version": "2.3.x-dev",
+            "alias-version": "2.3.9999999.9999999-dev"
+        },
         {
             "package": "doctrine/common",
             "version": "dev-master",
@@ -24,8 +30,8 @@
         {
             "package": "phraseanet/php-sdk",
             "version": "dev-master",
-            "source-reference": "697c6903f91b09a20f92d277b18ec0b2be424244",
-            "commit-date": "1341931682"
+            "source-reference": "14764847060c7d57ec52d38cdc4faf84704bec05",
+            "commit-date": "1341999570"
         },
         {
             "package": "phraseanet/silex-sdk-provider",
@@ -102,8 +108,8 @@
         {
             "package": "symfony/http-foundation",
             "version": "dev-master",
-            "source-reference": "985f3aa6c9f8074b2d1a12345e0768f8c24aa72d",
-            "commit-date": "1341838460"
+            "source-reference": "1a450955d5c487d85a7aaae4d8e306316c2a2f79",
+            "commit-date": "1341951444"
         },
         {
             "package": "symfony/http-kernel",
@@ -114,8 +120,8 @@
         {
             "package": "symfony/http-kernel",
             "version": "dev-master",
-            "source-reference": "b9fa4070ef08ed1d0f39e5e51f38cdc985742e99",
-            "commit-date": "1341931207"
+            "source-reference": "5032709c51ac154be997d99690f80c08b0943057",
+            "commit-date": "1341987182"
         },
         {
             "package": "symfony/routing",
