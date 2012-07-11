@@ -24,14 +24,14 @@
         {
             "package": "phraseanet/php-sdk",
             "version": "dev-master",
-            "source-reference": "b093f52504aad6de4e60071320de3feadf56ffd7",
-            "commit-date": "1342002024"
+            "source-reference": "91c6267a2a2f1bae8232f924ed64aa6b32c1db9d",
+            "commit-date": "1342003882"
         },
         {
             "package": "phraseanet/silex-sdk-provider",
             "version": "dev-master",
-            "source-reference": "b3bf9bf6b80c72ffd05f2efc011300abc852d40f",
-            "commit-date": "1341931514"
+            "source-reference": "231e8f1aaffe0f9bfcb215d129c609843481d96d",
+            "commit-date": "1342004373"
         },
         {
             "package": "pimple/pimple",
@@ -170,32 +170,7 @@
             "version": "v1.8.3"
         }
     ],
-    "packages-dev": [
-        {
-            "package": "symfony/browser-kit",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/browser-kit",
-            "version": "dev-master",
-            "source-reference": "8ea03fae14e2938b0d177a8812c5201d5510f9b7",
-            "commit-date": "1341838460"
-        },
-        {
-            "package": "symfony/dom-crawler",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/dom-crawler",
-            "version": "dev-master",
-            "source-reference": "f0f531c1808745a85ada3cc5519d54bd5f9b25c2",
-            "commit-date": "1341838460"
-        }
-    ],
+    "packages-dev": null,
     "aliases": [
 
     ],
