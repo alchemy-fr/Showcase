@@ -4,12 +4,20 @@
         {
             "package": "doctrine/common",
             "version": "dev-master",
-            "source-reference": "b3afbb80506d909743475c5b0904285ab0c07941",
-            "commit-date": "1341670930"
+            "alias-pretty-version": "2.3.x-dev",
+            "alias-version": "2.3.9999999.9999999-dev"
+        },
+        {
+            "package": "doctrine/common",
+            "version": "dev-master",
+            "source-reference": "ee3aeae972386d761d8358bab3d67e246f4261ba",
+            "commit-date": "1342078708"
         },
         {
             "package": "guzzle/guzzle",
-            "version": "v2.7.2"
+            "version": "dev-master",
+            "source-reference": "56c7fa0aebbac8b76a03ff8f6f7046b224a47266",
+            "commit-date": "1341990616"
         },
         {
             "package": "guzzle/silex-provider",
@@ -24,14 +32,14 @@
         {
             "package": "phraseanet/php-sdk",
             "version": "dev-master",
-            "source-reference": "91c6267a2a2f1bae8232f924ed64aa6b32c1db9d",
-            "commit-date": "1342003882"
+            "source-reference": "eab35073ceed95ff955ecb29e6a08eb0c7932557",
+            "commit-date": "1342088417"
         },
         {
             "package": "phraseanet/silex-sdk-provider",
             "version": "dev-master",
-            "source-reference": "231e8f1aaffe0f9bfcb215d129c609843481d96d",
-            "commit-date": "1342004373"
+            "source-reference": "5518a9a25d6a0d3a83e6567fefcbe7e4f88edf6d",
+            "commit-date": "1342088526"
         },
         {
             "package": "pimple/pimple",
@@ -48,8 +56,14 @@
         {
             "package": "silex/silex",
             "version": "dev-master",
-            "source-reference": "4679d476aee0a5981b13d4ac899a8ef72b8b060c",
-            "commit-date": "1341899486"
+            "alias-pretty-version": "1.0.x-dev",
+            "alias-version": "1.0.9999999.9999999-dev"
+        },
+        {
+            "package": "silex/silex",
+            "version": "dev-master",
+            "source-reference": "d5f26243645fab7f7d967ceb8e5cb85974719f95",
+            "commit-date": "1342022136"
         },
         {
             "package": "symfony/config",
@@ -77,15 +91,7 @@
         },
         {
             "package": "symfony/event-dispatcher",
-            "version": "dev-master",
-            "alias-pretty-version": "2.1.x-dev",
-            "alias-version": "2.1.9999999.9999999-dev"
-        },
-        {
-            "package": "symfony/event-dispatcher",
-            "version": "dev-master",
-            "source-reference": "0dc437f2eca7dea19facfde6db7f7f5e8e71d0bc",
-            "commit-date": "1341838460"
+            "version": "v2.1.0-BETA2"
         },
         {
             "package": "symfony/http-foundation",
@@ -170,7 +176,32 @@
             "version": "v1.8.3"
         }
     ],
-    "packages-dev": null,
+    "packages-dev": [
+        {
+            "package": "symfony/browser-kit",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/browser-kit",
+            "version": "dev-master",
+            "source-reference": "8ea03fae14e2938b0d177a8812c5201d5510f9b7",
+            "commit-date": "1341838460"
+        },
+        {
+            "package": "symfony/dom-crawler",
+            "version": "dev-master",
+            "alias-pretty-version": "2.1.x-dev",
+            "alias-version": "2.1.9999999.9999999-dev"
+        },
+        {
+            "package": "symfony/dom-crawler",
+            "version": "dev-master",
+            "source-reference": "f0f531c1808745a85ada3cc5519d54bd5f9b25c2",
+            "commit-date": "1341838460"
+        }
+    ],
     "aliases": [
 
     ],
