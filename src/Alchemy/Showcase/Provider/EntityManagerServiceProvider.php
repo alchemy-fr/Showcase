@@ -6,7 +6,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use PhraseanetSDK\Tools\Entity\Manager;
 
-class EntityManager implements ServiceProviderInterface
+class EntityManagerServiceProvider implements ServiceProviderInterface
 {
 
     public function register(Application $app)

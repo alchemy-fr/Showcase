@@ -6,7 +6,7 @@ use Silex\Application;
 use Silex\ServiceProviderInterface;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBag;
 
-class Configuration implements ServiceProviderInterface
+class ConfigurationServiceProvider implements ServiceProviderInterface
 {
 
     public function register(Application $app)
@@ -19,7 +19,7 @@ class Configuration implements ServiceProviderInterface
                 if (null === $conf = json_decode(file_get_contents($configFilePath), true)) {
                     throw new \RuntimeException('Json Configuration file cannot be decoded or the encoded');
                 }
-                
+
                 return new ParameterBag($conf);
             });
     }
