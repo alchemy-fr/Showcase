@@ -72,7 +72,7 @@ class ShowcaseTest extends WebTestCase
         $apiClient->expects($this->any())
                 ->method('call')
                 ->will($this->onConsecutiveCalls(
-                                $responseOneFeed, $responseAllFeed
+                                $responseOneFeed, $responseAllFeed, $responseOneFeed
                         ));
 
 
