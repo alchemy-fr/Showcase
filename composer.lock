@@ -316,12 +316,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/alchemy-fr/Phraseanet-PHP-SDK-Silex-Provider",
-                "reference": "5518a9a25d6a0d3a83e6567fefcbe7e4f88edf6d"
+                "reference": "b65b2a9543fc2954943426126abea7bed3f06483"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://github.com/alchemy-fr/Phraseanet-PHP-SDK-Silex-Provider/zipball/5518a9a25d6a0d3a83e6567fefcbe7e4f88edf6d",
-                "reference": "5518a9a25d6a0d3a83e6567fefcbe7e4f88edf6d",
+                "url": "https://github.com/alchemy-fr/Phraseanet-PHP-SDK-Silex-Provider/zipball/b65b2a9543fc2954943426126abea7bed3f06483",
+                "reference": "b65b2a9543fc2954943426126abea7bed3f06483",
                 "shasum": ""
             },
             "require": {
@@ -331,7 +331,7 @@
                 "phraseanet/php-sdk": "dev-master",
                 "silex/silex": "dev-master"
             },
-            "time": "1342088526",
+            "time": "1351278414",
             "type": "library",
             "installation-source": "source",
             "autoload": {
@@ -339,6 +339,9 @@
                     "Alchemy": "src"
                 }
             },
+            "license": [
+                "MIT"
+            ],
             "authors": [
                 {
                     "name": "Romain Neutron",
