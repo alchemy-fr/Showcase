@@ -3,7 +3,7 @@
     "description": "A simple way to exhibit your Phraseanet medias from publishing workflows",
     "require": {
         "php": ">=5.3.2",
-        "twig/twig": "1.8.*",
+        "twig/twig": "1.9.*",
         "twig/extensions": "dev-master",
         "silex/silex": "dev-master",
         "symfony/dependency-injection": "2.1.*",
