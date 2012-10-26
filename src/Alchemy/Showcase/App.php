@@ -26,7 +26,7 @@ if ($app['debug'] == false) {
 }
 
 $app->register(new ConfigurationServiceProvider(), array(
-    'config.file_path' => __DIR__ . '/../../../config/myini.json',
+    'config.file_path' => __DIR__ . '/../../../config/config.json',
 ));
 
 $app->register(new TranslationServiceProvider(), array(

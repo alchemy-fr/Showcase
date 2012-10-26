@@ -12,7 +12,7 @@ class ConfigurationServiceProvider implements ServiceProviderInterface
     public function register(Application $app)
     {
         $app['configuration'] = $app->share(function () use ($app) {
-                $default = __DIR__ . '/../../../../config/ini.json';
+                $default = __DIR__ . '/../../../../config/config.json';
 
                 $configFilePath = isset($app['config.file_path']) ? $app['config.file_path'] : $default;
 

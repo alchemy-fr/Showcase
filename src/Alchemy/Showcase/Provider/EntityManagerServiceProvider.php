@@ -4,7 +4,7 @@ namespace Alchemy\Showcase\Provider;
 
 use Silex\Application;
 use Silex\ServiceProviderInterface;
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 
 class EntityManagerServiceProvider implements ServiceProviderInterface
 {
@@ -13,7 +13,7 @@ class EntityManagerServiceProvider implements ServiceProviderInterface
     {
         $app['em'] = $app->share(function () use ($app)
                 {
-                    return new Manager($app['phraseanet-sdk']);
+                    return new EntityManager($app['phraseanet-sdk']);
                 });
     }
 

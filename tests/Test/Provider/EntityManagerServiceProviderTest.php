@@ -2,7 +2,7 @@
 
 namespace Test\Provider;
 
-use PhraseanetSDK\Tools\Entity\Manager;
+use PhraseanetSDK\EntityManager;
 use Alchemy\Showcase\Provider\EntityManagerServiceProvider;
 
 class EntityManagerServiceProviderTest extends \PHPUnit_Framework_TestCase
@@ -12,12 +12,12 @@ class EntityManagerServiceProviderTest extends \PHPUnit_Framework_TestCase
     {
         $app = require __DIR__ . '/../../../src/Alchemy/Showcase/App.php';
         $app->register(new EntityManagerServiceProvider(), array(
-            'config.file_path' => __DIR__ . '/../../ressources/ini.json'
+            'config.file_path' => __DIR__ . '/../../resources/ini.json'
         ));
 
         $this->assertTrue(isset($app['em']));
 
-        $this->assertTrue($app['em'] instanceof Manager);
+        $this->assertTrue($app['em'] instanceof EntityManager);
     }
 
 }

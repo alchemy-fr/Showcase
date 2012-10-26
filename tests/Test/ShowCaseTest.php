@@ -4,20 +4,34 @@ namespace Test;
 
 use Silex\WebTestCase;
 use PhraseanetSDK\Response;
-use PhraseanetSDK\Tools\Entity\Manager;
-
+use PhraseanetSDK\EntityManager;
 
 class ShowcaseTest extends WebTestCase
 {
+    private static $rollback = false;
 
     public function createApplication()
     {
+        if (!file_exists(__DIR__ . '/../../config/config.json')) {
+            copy(__DIR__ . '/../resources/ini.json', __DIR__ . '/../../config/config.json');
+            self::$rollback = true;
+        }
+
         $app = require __DIR__ . '/../../src/Alchemy/Showcase/App.php';
 
         $app['debug'] = true;
         unset($app['exception_handler']);
 
         return $app;
+    }
+
+    public function tearDown()
+    {
+        if (self::$rollback) {
+            unlink(__DIR__ . '/../../config/config.json');
+        }
+
+        parent::tearDown();
     }
 
     public function testSlash()
@@ -36,7 +50,7 @@ class ShowcaseTest extends WebTestCase
                 ->method('call')
                 ->will($this->returnValue($responseAllFeed));
 
-        $this->app['em'] = new Manager($apiClient);
+        $this->app['em'] = new EntityManager($apiClient);
 
         $client->request('GET', '/');
         $this->assertTrue($client->getResponse()->isOk());
@@ -62,9 +76,9 @@ class ShowcaseTest extends WebTestCase
                         ));
 
 
-        $this->app['em'] = new Manager($apiClient);
+        $this->app['em'] = new EntityManager($apiClient);
 
-        $client->request('GET', '/feed/1/0/5');
+        $client->request('GET', '/feed/1');
 
         $this->assertTrue($client->getResponse()->isOk());
     }
@@ -91,7 +105,7 @@ class ShowcaseTest extends WebTestCase
                         ));
 
 
-        $this->app['em'] = new Manager($apiClient);
+        $this->app['em'] = new EntityManager($apiClient);
 
         $client->request('GET', '/feed/1457/0/5');
 
@@ -121,7 +135,7 @@ class ShowcaseTest extends WebTestCase
                         ));
 
 
-        $this->app['em'] = new Manager($apiClient);
+        $this->app['em'] = new EntityManager($apiClient);
 
         $client->request('GET', '/entry/1457/0/5/1661');
 
@@ -148,7 +162,7 @@ class ShowcaseTest extends WebTestCase
 //                        ));
 //
 //
-//        $this->app['em'] = new Manager($apiClient);
+//        $this->app['em'] = new EntityManager($apiClient);
 //
 //        $client->request('GET', '/entry/1457/0/5/9999999');
 //
@@ -158,7 +172,7 @@ class ShowcaseTest extends WebTestCase
 
     private function getSampleResponse($filename)
     {
-        $filename = __DIR__ . '/../ressources/feed/' . $filename . '.json';
+        $filename = __DIR__ . '/../resources/feed/' . $filename . '.json';
 
         return json_decode(file_get_contents($filename));
     }
